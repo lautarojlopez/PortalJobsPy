@@ -54,7 +54,7 @@
             <li>Bienvenido, {{ request.user.first_name }}</li>
             <li><a class="active" href="{% url "Home" %}">Inicio</a></li>
             {% if request.tipo_cuenta == "Postulante" %}
-              <li><a href="services.html">Mi CV</a></li>
+              <li><a href="{% url "MiCV" %}">Mi CV</a></li>
               <li><a href="about.html">Mis Postulaciones</a></li>
             {% else %}
               <li><a href="about.html">Publicar Oferta</a></li>
@@ -161,6 +161,9 @@
 
   <!-- Template Main JS File -->
   <script src="{% static "assets/js/main.js" %}"></script>
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/e323a62359.js" crossorigin="anonymous"></script>
 
 </body>
 

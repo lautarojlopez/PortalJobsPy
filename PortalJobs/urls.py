@@ -25,5 +25,8 @@ urlpatterns = [
     path('', home, name="Home"),
 
     # Usuarios
-    path('', include('usuarios.urls'))
+    path('', include('usuarios.urls')),
+
+    #CV
+    path('', include('CV.urls'))
 ]

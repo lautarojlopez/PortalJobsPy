@@ -1,0 +1,184 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+{% block title %}Crear Cuenta{% endblock title %}
+
+{% block content %}
+    <section class="container p-5 w-75 registro">
+
+    {% if errors %}
+        <div class="alert alert-danger" role="alert">
+            {{errors}}
+        </div>
+    {% endif %}
+
+        <h2 class="text-center">Mi CV</h2>
+
+        <hr class="bg-primary border-2 border-top border-primary">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-4">
+                        <h3 class="mb-3">Datos Personales</h3>
+                        <h4>Nombre:</h4>
+                        <p>Lautaro López</p>
+                        <h4>Fecha de nacimiento:</h4>
+                        <p>9 de enero de 1997</p>
+                        <h4>Género:</h4>
+                        <p>Hombre</p>
+                        <h4>DNI</h4>
+                        <p>40267609</p>
+                        <h4>Nacionalidad:</h4>
+                        <p>Argentino</p>
+                        <h4>Localidad:</h4>
+                        <p>Santa Fe</p>
+                    </div>
+
+                    <div class="col-4">
+                        <h3 class="mb-3">Contacto</h3>
+
+                        <h4>Dirección:</h4>
+                        <p>Alvear 7729</p>
+
+                        <h4>Código Postal</h4>
+                        <p>3000</p>
+
+                        <h4>Teléfono</h4>
+                        <p>3425080015</p>
+
+                        <h4>E-mail</h4>
+                        <p>lauty@mail.com</p>
+                    </div>
+                    <div class="col-4">
+                        <img src="{% static "assets/img/fotocv.png" %}" style="width: 200px;" alt="">
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <a href="/mi-cv/editar/datos-personales"><button type="button" class="btn btn-primary d-block p-2">EDITAR  <i class="fas fa-pen"></i></button></a>
+                </div>
+            </div>
+
+            <hr class="bg-primary border-2 border-top border-primary">
+
+            <h3 class="mb-3">Perfil</h3>
+
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus consequatur iure saepe voluptatibus esse, quos asperiores dolore libero doloremque reiciendis debitis perspiciatis quam qui delectus labore, enim adipisci quas quasi.</p>
+
+                <div class="d-flex justify-content-end">
+                    <a href="/mi-cv/editar/perfil"><button type="button" class="btn btn-primary d-block p-2">EDITAR  <i class="fas fa-pen"></i></button></a>
+                </div>
+            
+            <hr class="bg-primary border-2 border-top border-primary">
+
+            <h3 class="mb-3">Educación</h3>
+
+                <ul>
+                    <li class="mt-3">
+                        <h4>Ingeniería informática</h4>
+                        <p>Universitario En Curso - Universidad Nacional del Litoral</p>
+                        <div class="row mt-3">
+                            <div class="col-3">
+                                <strong>Desde: </strong><p>2019</p>
+                            </div>
+                            <div class="col-3">
+                                <strong>Hasta: </strong><p>Actualidad</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <a href="/mi-cv/editar/educacion/<%= educacion._id %>"><button type="button" class="btn btn-primary d-block">EDITAR  <i class="fas fa-pen"></i></button></a>
+                            </div>
+                            <div class="col-2">
+                                <a href="/mi-cv/eliminar/educacion/<%= educacion._id %>"><button type="button" class="btn btn-danger d-block">BORRAR  <i class="fas fa-trash-alt"></i></button></a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+            <div class="d-flex justify-content-end">
+                <a href="/mi-cv/agregar/educacion"><button type="button" class="btn btn-primary d-block p-2">AGREGAR  <i class="fas fa-plus-circle"></i></button></a>
+            </div>
+
+            <hr class="bg-primary border-2 border-top border-primary">
+
+                <h3 class="mb-3">Experiencia Laboral</h3>
+
+                    <ul>
+                        <li class="mt-3">
+                            <h4>Desarrollador Backend</h4>
+                            <p>Google</p>
+                            <h4>Descripción:</h4>
+                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci id distinctio, perspiciatis, et inventore iste veritatis non, odit at incidunt asperiores? Eius, quidem! Consequatur, corrupti. Nemo dolores obcaecati mollitia enim?</p>
+                            <div class="row mt-3">
+                                <div class="col-3">
+                                    <strong>Desde: </strong><p>2019</p>
+                                </div>
+                                <div class="col-3">
+                                    <strong>Hasta: </strong><p>Actualidad</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2">
+                                    <a href="/mi-cv/editar/experiencia/<%= exp._id %>"><button type="button" class="btn btn-primary d-block">EDITAR  <i class="fas fa-pen"></i></button></a>
+                                </div>
+                                <div class="col-2">
+                                    <a href="/mi-cv/eliminar/experiencia/<%= exp._id %>"><button type="button" class="btn btn-danger d-block">BORRAR  <i class="fas fa-trash-alt"></i></button></a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                <div class="d-flex justify-content-end">
+                    <a href="/mi-cv/agregar/experiencia"><button type="button" class="btn btn-primary d-block p-2">AGREGAR  <i class="fas fa-plus-circle"></i></button></a>
+                </div>
+
+                <hr class="bg-primary border-2 border-top border-primary">
+
+                <h3 class="mb-3">Conocimientos y Habilidades</h3>
+
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero maiores ad ex asperiores praesentium, incidunt ratione eius repellendus facere, quae natus! Dolore amet nihil rerum est aliquid quibusdam numquam nisi.</p>
+
+                <div class="d-flex justify-content-end">
+                    <a href="/mi-cv/editar/conocimientos-y-habilidades"><button type="button" class="btn btn-primary d-block p-2">EDITAR  <i class="fas fa-pen"></i></button></a>
+                </div>
+
+                <hr class="bg-primary border-2 border-top border-primary">
+
+                <h3 class="mb-3">Idiomas</h3>
+
+                    <div class="row mt-3 mb-3">
+                        <div class="col-3">
+                            <p>Ingles - Intermedio</p>
+                        </div>
+                        <div class="col-4">
+                            <a href="/mi-cv/editar/idioma/<%= idioma._id %>"><button type="button" class="btn btn-primary d-inline"><i class="fas fa-pen"></i></button></a> <a href="/mi-cv/eliminar/idioma/<%= idioma._id %>"><button type="button" class="btn btn-danger d-inline"><i class="fas fa-trash-alt"></i></button></a>
+                        </div>
+                    </div>
+
+                <div class="d-flex justify-content-end">
+                    <a href="/mi-cv/agregar/idioma"><button type="button" class="btn btn-primary d-block p-2">AGREGAR  <i class="fas fa-plus-circle"></i></button></a>
+                </div>
+
+                <hr class="bg-primary border-2 border-top border-primary">
+
+                <h3 class="mb-3">Otros</h3>
+
+                <h4>Licencia de conducir:</h4>
+                <p>No Posee</p>
+
+                <h4>Movilidad Propia:</h4>
+                <p>No</p>
+
+                <h4>Disponibilidad para viajar:</h4>
+                <p>No</p>
+
+                <h4>Disponibilidad para mudarse:</h4>
+                <p>No</p>
+
+                <div class="d-flex justify-content-end">
+                    <a href="/mi-cv/editar/otros"><button type="button" class="btn btn-primary d-block p-2">EDITAR  <i class="fas fa-pen"></i></button></a>
+                </div>
+
+    </section>
+{% endblock content %}

@@ -1876,3 +1876,9 @@ section {
   font-size: 13px;
   color: #fff;
 }
+
+/* ESTILOS */
+
+#foto-cv{
+  width: 100px !important;
+}
