@@ -28,5 +28,5 @@ urlpatterns = [
     path('', include('usuarios.urls')),
 
     #CV
-    path('', include('CV.urls'))
+    path('mi-cv/', include('CV.urls'))
 ]

@@ -13,6 +13,16 @@
         </div>
     {% endif %}
 
+    {% for message in messages %}
+        <div class="alert alert-success w-50" role="alert">
+            <ul>
+                <li>
+                    {{message}}
+                </li>
+            </ul>
+        </div>
+    {% endfor %}
+
         <h2 class="text-center">Mi CV</h2>
 
         <hr class="bg-primary border-2 border-top border-primary">
