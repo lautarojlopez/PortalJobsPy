@@ -87,7 +87,7 @@
             
             <hr class="bg-primary border-2 border-top border-primary">
 
-            <h3 class="mb-3">Educación</h3>
+            <h3 class="mb-3">Estudios</h3>
 
                 {% if cv.estudios %}
                     {% for estudio in cv.estudios %}
@@ -161,9 +161,13 @@
                 <hr class="bg-primary border-2 border-top border-primary">
 
                 <h3 class="mb-3">Conocimientos y Habilidades</h3>
-
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero maiores ad ex asperiores praesentium, incidunt ratione eius repellendus facere, quae natus! Dolore amet nihil rerum est aliquid quibusdam numquam nisi.</p>
-
+                
+                {% if cv.habilidades is None or cv.habilidades == "" %}
+                    Aún no has añadido conocimientos y habilidades
+                {% else %}
+                    {{ cv.habilidades|safe }}
+                {% endif %}
+                
                 <div class="d-flex justify-content-end">
                     <a href="/mi-cv/editar/conocimientos-y-habilidades"><button type="button" class="btn btn-primary d-block p-2">EDITAR  <i class="fas fa-pen"></i></button></a>
                 </div>

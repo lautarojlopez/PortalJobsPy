@@ -186,3 +186,20 @@ def eliminar_estudios(request, id):
             # Redirecciona con mensaje de error
             messages.error(request, 'Ups... Algo ha salido mal. Vuelve a intentarlo.')
             return redirect("MiCV")
+
+def editar_cyh(request):
+    # Busca el CV del usuario en la base de datos
+    cv = CV.objects.get(id=request.userprofile.cv_id)
+    if request.method == "GET":
+        return render(request, 'editar-cyh.html', {"cv": cv})
+    if request.method == "POST":
+        try:
+            cv.habilidades = request.POST['habilidades']
+            cv.save()
+            # Redirecciona con mensaje de éxito
+            messages.success(request, 'Estudios eliminados correctamente')
+            return redirect("MiCV")
+        except:
+            # Redirecciona con mensaje de error
+            messages.error(request, 'Ups... Algo ha salido mal. Vuelve a intentarlo.')
+            return redirect("MiCV")

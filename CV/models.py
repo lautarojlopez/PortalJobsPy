@@ -36,7 +36,7 @@ class CV(models.Model):
     disponibilidad_mudarse = models.BooleanField(null=True, blank=True)
     movilidad_propia = models.BooleanField(null=True, blank=True)
     perfil = models.TextField(null=True, blank=True)
-    habilidades = models.TextField(null=True, blank=True)
+    habilidades = models.TextField(null=True, blank=True, default="")
     imagen = models.FileField(null=True, blank=True)
 
     # Array de licencias de conducir
