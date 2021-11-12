@@ -13,15 +13,17 @@
         </div>
     {% endif %}
 
-    {% for message in messages %}
-        <div class="alert alert-success w-50" role="alert">
-            <ul>
-                <li>
-                    {{message}}
-                </li>
-            </ul>
-        </div>
-    {% endfor %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">  <!-- singular -->
+                <ul>
+                    <li>
+                        {{ message }}
+                    </li>
+                </ul>
+            </div>
+        {% endfor %}
+    {% endif %}
 
         <h2 class="text-center">Mi CV</h2>
 
@@ -31,34 +33,34 @@
                 <div class="row">
                     <div class="col-4">
                         <h3 class="mb-3">Datos Personales</h3>
-                        <h4>Nombre:</h4>
-                        <p>Lautaro López</p>
-                        <h4>Fecha de nacimiento:</h4>
-                        <p>9 de enero de 1997</p>
-                        <h4>Género:</h4>
-                        <p>Hombre</p>
+                        <h4>Nombre</h4>
+                        <p>{% if cv.nombre is not None %} {{ cv.nombre }} {% else %} "N/A" {% endif %}</p>
+                        <h4>Fecha de nacimiento</h4>
+                        <p id="fechanacimiento">{% if cv.fecha_nacimiento is not None %} {{ cv.fecha_nacimiento }} {% else %} N/A {% endif %}</p>
+                        <h4>Género</h4>
+                        <p>{% if cv.genero is not None %} {{ cv.genero }} {% else %} N/A {% endif %}</p>
                         <h4>DNI</h4>
-                        <p>40267609</p>
+                        <p>{% if cv.DNI is not None %} {{ cv.DNI }} {% else %} N/A {% endif %}</p>
                         <h4>Nacionalidad:</h4>
-                        <p>Argentino</p>
+                        <p>{% if cv.nacionalidad is not None %} {{ cv.nacionalidad }} {% else %} N/A {% endif %}</p>
                         <h4>Localidad:</h4>
-                        <p>Santa Fe</p>
+                        <p>{% if cv.localidad is not None %} {{ cv.localidad }} {% else %} N/A {% endif %}</p>
                     </div>
 
                     <div class="col-4">
                         <h3 class="mb-3">Contacto</h3>
 
-                        <h4>Dirección:</h4>
-                        <p>Alvear 7729</p>
+                        <h4>Dirección</h4>
+                        <p>{% if cv.direccion is not None %} {{ cv.direccion }} {% else %} N/A {% endif %}</p>
 
                         <h4>Código Postal</h4>
-                        <p>3000</p>
+                        <p>{% if cv.codigo_postal is not None %} {{ cv.codigo_postal }} {% else %} N/A {% endif %}</p>
 
                         <h4>Teléfono</h4>
-                        <p>3425080015</p>
+                        <p>{% if cv.telefono is not None %} {{ cv.telefono }} {% else %} N/A {% endif %}</p>
 
                         <h4>E-mail</h4>
-                        <p>lauty@mail.com</p>
+                        <p>{% if cv.email is not None %} {{ cv.email }} {% else %} N/A {% endif %}</p>
                     </div>
                     <div class="col-4">
                         <img src="{% static "assets/img/fotocv.png" %}" style="width: 200px;" alt="">
@@ -73,7 +75,11 @@
 
             <h3 class="mb-3">Perfil</h3>
 
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus consequatur iure saepe voluptatibus esse, quos asperiores dolore libero doloremque reiciendis debitis perspiciatis quam qui delectus labore, enim adipisci quas quasi.</p>
+                {% if cv.perfil is not None or cv.perfil != "" %}
+                    {{ cv.perfil|safe }}
+                {% else %}
+                    Aún no has escrito un perfil
+                {% endif %}
 
                 <div class="d-flex justify-content-end">
                     <a href="/mi-cv/editar/perfil"><button type="button" class="btn btn-primary d-block p-2">EDITAR  <i class="fas fa-pen"></i></button></a>
@@ -83,31 +89,40 @@
 
             <h3 class="mb-3">Educación</h3>
 
-                <ul>
+                {% if cv.estudios %}
+                    {% for estudio in cv.estudios %}
+                    <ul>
                     <li class="mt-3">
-                        <h4>Ingeniería informática</h4>
-                        <p>Universitario En Curso - Universidad Nacional del Litoral</p>
+                        <h4>{{ estudio.titulo }}</h4>
+                        <p>{{ estudio.tipo }} {{ estudio.estado }} - {{ estudio.institucion }}</p>
                         <div class="row mt-3">
                             <div class="col-3">
-                                <strong>Desde: </strong><p>2019</p>
+                                <strong>Desde: </strong><p>{{ estudio.mes_desde }} - {% if estudio.anio_desde == 2021 %} Actualidad {% else %} {{ estudio.anio_desde }} {% endif %}</p>
                             </div>
                             <div class="col-3">
-                                <strong>Hasta: </strong><p>Actualidad</p>
+                                <strong>Hasta: </strong><p>{{ estudio.mes_hasta }} - {% if estudio.anio_hasta == 2021 %} Actualidad {% else %} {{ estudio.anio_hasta }} {% endif %}</p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-2">
-                                <a href="/mi-cv/editar/educacion/<%= educacion._id %>"><button type="button" class="btn btn-primary d-block">EDITAR  <i class="fas fa-pen"></i></button></a>
+                                <a href="/mi-cv/editar/estudios/{{ estudio.id }}"><button type="button" class="btn btn-primary d-block">EDITAR  <i class="fas fa-pen"></i></button></a>
                             </div>
                             <div class="col-2">
-                                <a href="/mi-cv/eliminar/educacion/<%= educacion._id %>"><button type="button" class="btn btn-danger d-block">BORRAR  <i class="fas fa-trash-alt"></i></button></a>
+                                <a href="/mi-cv/eliminar/estudios/{{ estudio.id }}"><button type="button" class="btn btn-danger d-block">BORRAR  <i class="fas fa-trash-alt"></i></button></a>
                             </div>
                         </div>
                     </li>
                 </ul>
+                {% endfor %}
+                {% else %}
+                    Aún no has añadido datos
+                {% endif %}
+                
+
+                
 
             <div class="d-flex justify-content-end">
-                <a href="/mi-cv/agregar/educacion"><button type="button" class="btn btn-primary d-block p-2">AGREGAR  <i class="fas fa-plus-circle"></i></button></a>
+                <a href="{% url "agregar-estudios" %}"><button type="button" class="btn btn-primary d-block p-2">AGREGAR  <i class="fas fa-plus-circle"></i></button></a>
             </div>
 
             <hr class="bg-primary border-2 border-top border-primary">

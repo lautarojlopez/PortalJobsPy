@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Eliminar Estudios
+{% endblock title %}
+
+{% block content %}
+    <section class="formulario-registro">
+
+    <div class="container">
+        <div class="row gy-4 align-items-center">
+            <div class="col-lg-10">
+                
+                <h2 class="display-3">Eliminar - Educación</h2>
+                  
+                <hr class="bg-primary border-2 border-top border-primary">
+
+                <form action="{% url "eliminar-estudios" estudios.id %}" method="POST">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>¿Estás seguro de que deseas eliminar esta educación?</h4>
+
+                                <ul>
+                                    <li class="mt-3">
+                                        <h4>{{ estudios.titulo }}</h4>
+                                        <p>{{ estudios.tipo }} {{ estudios.estado }} - {{ estudios.institucion }}</p>
+                                        <div class="row mt-3">
+                                            <div class="col-3">
+                                                <strong>Desde: </strong><p>{{ estudios.mes_desde }} - {{ estudios.anio_desde }}</p>
+                                            </div>
+                                            <div class="col-3">
+                                                <strong>Hasta: </strong><p>{{ estudios.mes_hasta }} - {{ estudios.anio_hasta }}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <div class="row">
+                                    <div class="col-2">
+                                        <a href="{% url "MiCV" %}"><button type="button" class="btn btn-primary d-block">CANCELAR</button></a>
+                                    </div>
+                                    <div class="col-2">
+                                        <form action="{% url "eliminar-estudios" estudios.id %}" method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="index" value="<%= i %>">
+                                            <input type="submit" class="btn btn-danger d-block" value="ELIMINAR">
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

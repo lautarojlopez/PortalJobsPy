@@ -28,25 +28,25 @@
                     <div class="row">
                         <div class="col-4">
                             <h3 class="mb-3">Datos Personales</h3>
-                            <h4>Nombre:</h4>
+                            <h4>Nombre</h4>
                                 <div class="form-group mt-3 mb-3">
-                                    <input type="text" name="nombre" class="form-control" placeholder="Tu Nombre">
+                                    <input type="text" name="nombre" class="form-control" placeholder="Tu Nombre" value={% if cv.nombre is not None %} {{ cv.nombre }} {% else %} "N/A" {% endif %}>
                                 </div>
-                            <h4>Fecha de nacimiento:</h4>
+                            <h4>Fecha de nacimiento</h4>
                                 <div class="form-group mt-3 mb-3">
-                                    <input type="date" name="fecha_nacimiento" class="form-control">
+                                    <input type="date" name="fecha_nacimiento" class="form-control" value={% if cv.fecha_nacimiento is not None %} {{ cv.fecha_nacimiento }} {% else %} "" {% endif %}>
                                 </div>
-                            <h4>Género:</h4>
+                            <h4>Género</h4>
                                 <div class="form-group mt-3 mb-3">
                                     <select class="form-select" name="genero">
                                         <option value="" hidden>-- SELECCIONAR --</option>
-                                        <option value="Hombre">Hombre</option>
-                                        <option value="Mujer">Mujer</option>
+                                        <option value="Hombre" {% if cv.genero == "Hombre" %} selected {% endif %}>Hombre</option>
+                                        <option value="Mujer" {% if cv.genero == "Mujer" %} selected {% endif %}>Mujer</option>
                                     </select>
                                 </div>
                             <h4>DNI</h4>
                                 <div class="form-group mt-3 mb-3">
-                                    <input type="text" name="DNI" class="form-control">
+                                    <input type="text" name="DNI" class="form-control" value={% if cv.DNI is not None %} {{ cv.DNI }} {% else %} "" {% endif %}>
                                 </div>
                             <h4>Nacionalidad:</h4>
                             <select class="form-select mb-3" name="nacionalidad" aria-label="">
@@ -62,7 +62,7 @@
                                 <option value="AN">Antillas Holandesas</option>
                                 <option value="SA">Arabia Saudí</option>
                                 <option value="DZ">Argelia</option>
-                                <option value="AR">Argentina</option>
+                                <option value="AR" selected >Argentina</option>
                                 <option value="AM">Armenia</option>
                                 <option value="AW">Aruba</option>
                                 <option value="AU">Australia</option>
@@ -318,24 +318,24 @@
                         <div class="col-4">
                             <h3 class="mb-3">Contacto</h3>
     
-                            <h4>Dirección:</h4>
+                            <h4>Dirección</h4>
                             <div class="form-group mt-3 mb-3">
-                                <input type="text" name="direccion" class="form-control">
+                                <input type="text" name="direccion" class="form-control" value={% if cv.direccion is not None %} {{ cv.direccion }} {% else %} "" {% endif %}>
                             </div>
     
                             <h4>Código Postal</h4>
                                 <div class="form-group mt-3 mb-3">
-                                    <input type="text" name="codigo_postal" class="form-control">
+                                    <input type="text" name="codigo_postal" class="form-control" value={% if cv.codigo_postal is not None %} {{ cv.codigo_postal }} {% else %} "" {% endif %}>
                                 </div>
     
                             <h4>Teléfono</h4>
                                 <div class="form-group mt-3 mb-3">
-                                    <input type="text" name="telefono" class="form-control">
+                                    <input type="text" name="telefono" class="form-control" value={% if cv.telefono is not None %} {{ cv.telefono }} {% else %} "" {% endif %}>
                                 </div>
     
                             <h4>E-mail</h4>
                                 <div class="form-group mt-3 mb-3">
-                                    <input type="email" name="email" class="form-control">
+                                    <input type="email" name="email" class="form-control" value={% if cv.email is not None %} {{ cv.email }} {% else %} "" {% endif %}>
                                 </div>
                         </div>
                         <div class="col-4">
