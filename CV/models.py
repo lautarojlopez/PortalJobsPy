@@ -18,6 +18,9 @@ class Migration(migrations.Migration):
 # Función para setear por defecto las licencias de conducir
 def licencia_default():
     return(list(["No Posee"]))
+# Función para setear por defecto como arreglo vacio los arreglos de Experiencia y Estudios
+def arreglo_vacio():
+    return(list())
 
 # Create your models here.
 class CV(models.Model):
@@ -35,7 +38,7 @@ class CV(models.Model):
     disponibilidad_viajar = models.BooleanField(null=True, blank=True)
     disponibilidad_mudarse = models.BooleanField(null=True, blank=True)
     movilidad_propia = models.BooleanField(null=True, blank=True)
-    perfil = models.TextField(null=True, blank=True)
+    perfil = models.TextField(null=True, blank=True, default="")
     habilidades = models.TextField(null=True, blank=True, default="")
     imagen = models.FileField(null=True, blank=True)
 
@@ -50,17 +53,17 @@ class CV(models.Model):
     experiencia = ArrayField(
         HStoreField(),
         null=True,
-        blank=True
+        blank=True,
+        default=arreglo_vacio
     )
 
     # Array de estudios
     estudios = ArrayField(
         HStoreField(),
         null=True,
-        blank=True
+        blank=True,
+        default=arreglo_vacio
     )
 
     # Indica si el CV está lo suficientemente completo como para postularse a las ofertas
     completo = models.BooleanField(default=False, null=True, blank=True)
-
-    # cv = CV.objects.create(nombre="Lautaro Lopez", DNI=40267609, fecha_nacimiento="09/01/1997", genero="Hombre", nacionalidad="AR", localidad="Santa Fe", codigo_postal=3000, direccion="Alvear 7729", telefono=3425080015, email="lauty@mail.com", disponibilidad_viajar=False, disponibilidad_mudarse=False, movilidad_propia=False, perfil="xd", habilidades="xd", licencias=["No Posee"], experiencia=[{"empresa": "La empresa"}], estudios=[{"institucion": "Escuela"}], completo=True)

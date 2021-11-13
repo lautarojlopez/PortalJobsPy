@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from CV.models import CV
-from .forms import FormDatosPersonales, FormEstudios
+from .forms import FormDatosPersonales, FormEstudios, FormExperiencia
 
 # Create your views here.
 def mi_cv(request):
@@ -72,6 +72,7 @@ def perfil(request):
             messages.error(request, 'Ups... Algo ha salido mal. Vuelve a intentarlo.')
             return redirect("MiCV")
 
+# Agregar estudios al arreglo de estudios en CV
 def agregar_estudios(request):
     if request.method == "GET":
         return render(request, 'agregar-estudios.html')
@@ -99,7 +100,6 @@ def agregar_estudios(request):
                         "anio_hasta": estudios['anio_hasta']
                     }]
                 else:
-                    print(cv.estudios[-1]['id'])
                     cv.estudios.append({
                         "id": int(cv.estudios[-1]['id']) + 1,
                         "titulo": estudios['titulo'],
@@ -126,6 +126,7 @@ def agregar_estudios(request):
         else:
             return render(request, 'agregar-estudios.html', { "errors": form_estudios.errors })
 
+# Editar un estudio
 def editar_estudios(request, id):
     # Busca el CV del usuario en la base de datos
     cv = CV.objects.get(id=request.userprofile.cv_id)
@@ -163,9 +164,9 @@ def editar_estudios(request, id):
                 return redirect("MiCV")
         # Si no es valido, redirige con errores
         else:
-            print(form_estudios.cleaned_data)
             return render(request, 'editar-estudios.html', { "errors": form_estudios.errors, "estudio": estudios })
 
+# Eliminar estudios del arreglo de estudios en CV
 def eliminar_estudios(request, id):
 
     # Busca el CV del usuario en la base de datos
@@ -187,6 +188,7 @@ def eliminar_estudios(request, id):
             messages.error(request, 'Ups... Algo ha salido mal. Vuelve a intentarlo.')
             return redirect("MiCV")
 
+# Edicion de Conocimientos y Habilidades
 def editar_cyh(request):
     # Busca el CV del usuario en la base de datos
     cv = CV.objects.get(id=request.userprofile.cv_id)
@@ -203,3 +205,96 @@ def editar_cyh(request):
             # Redirecciona con mensaje de error
             messages.error(request, 'Ups... Algo ha salido mal. Vuelve a intentarlo.')
             return redirect("MiCV")
+
+# Agregar experiencia al arreglo experiencias en CV
+def agregar_experiencia(request):
+    if request.method == "GET":
+        return render(request, 'agregar-experiencia.html')
+    if request.method == "POST":
+        # Busca el CV del usuario en la base de datos
+        cv = CV.objects.get(id=request.userprofile.cv_id)
+        form_experiencia = FormExperiencia(request.POST)
+
+        if form_experiencia.is_valid():
+            try:
+                datos = form_experiencia.cleaned_data
+                # ID para luego poder borrar o editar la experiencia
+                if len(cv.experiencia) == 0:
+                    # Si el arreglo está vacío, el id será cero
+                    id = 0
+                else:
+                    # Sino, toma el id del ultimo elemento del arreglo y le suma 1
+                    id = int(cv.experiencia[-1]['id']) + 1
+                experiencia = {
+                    "id": id,
+                    "puesto": datos['puesto'],
+                    "empresa": datos['empresa'],
+                    "descripcion": datos['descripcion'],
+                    "mes_desde": datos['mes_desde'],
+                    "anio_desde": datos['anio_desde'],
+                    "mes_hasta": datos['mes_hasta'],
+                    "anio_hasta": datos['anio_hasta']
+                }
+                cv.experiencia.append(experiencia)
+                cv.save()
+                # Redirecciona con mensaje de éxito
+                messages.success(request, 'Experiencia agregada correctamente')
+                return redirect("MiCV")
+            except:
+                # Redirecciona con mensaje de error
+                messages.error(request, 'Ups... Algo ha salido mal. Vuelve a intentarlo.')
+                return redirect("MiCV")
+        else:
+            return render(request, 'agregar-experiencia.html', { "errors": form_experiencia.errors })
+
+def eliminar_experiencia(request, id):
+    # Busca el CV del usuario en la base de datos
+    cv = CV.objects.get(id=request.userprofile.cv_id)
+    # Busca la experiencia a eliminar en el arreglo de experiencias
+    experiencia = cv.experiencia[id-1]
+    if request.method == "GET":
+        return render(request, 'eliminar-experiencia.html', {"experiencia": experiencia})
+    if request.method == "POST":
+        try:
+            cv.experiencia.remove(experiencia)
+            cv.save()
+             # Redirecciona con mensaje de éxito
+            messages.success(request, 'Experiencia eliminada correctamente')
+            return redirect("MiCV")
+        except:
+            # Redirecciona con mensaje de error
+            messages.error(request, 'Ups... Algo ha salido mal. Vuelve a intentarlo.')
+            return redirect("MiCV")
+
+# Editar una experiencia laboral
+def editar_experiencia(request, id):
+
+    # Busca el CV del usuario en la base de datos
+    cv = CV.objects.get(id=request.userprofile.cv_id)
+    # Busca la experiencia a editar en el arreglo de experiencias
+    experiencia = cv.experiencia[id]
+
+    if request.method == "GET":
+        return render(request, 'editar-experiencia.html', {"experiencia": experiencia})
+    if request.method == "POST":
+        form_experiencia = FormExperiencia(request.POST)
+        if form_experiencia.is_valid():
+            datos = form_experiencia.cleaned_data
+            try:
+                experiencia['puesto'] = datos['puesto']
+                experiencia['empresa'] = datos['empresa']
+                experiencia['descripcion'] = datos['descripcion']
+                experiencia['mes_desde'] = datos['mes_desde']
+                experiencia['anio_desde'] = datos['anio_desde']
+                experiencia['mes_hasta'] = datos['mes_hasta']
+                experiencia['anio_hasta'] = datos['anio_hasta']
+
+                cv.save()
+                messages.success(request, 'Experiencia editada correctamente')
+                return redirect("MiCV")
+            except:
+                # Redirecciona con mensaje de error
+                messages.error(request, 'Ups... Algo ha salido mal. Vuelve a intentarlo.')
+                return redirect("MiCV")
+        else:
+            return render(request, 'editar-experiencia.html', { "errors": form_experiencia.errors, "experiencia": experiencia })

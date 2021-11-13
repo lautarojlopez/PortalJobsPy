@@ -75,7 +75,7 @@
 
             <h3 class="mb-3">Perfil</h3>
 
-                {% if cv.perfil is not None or cv.perfil != "" %}
+                {% if cv.perfil != "" %}
                     {{ cv.perfil|safe }}
                 {% else %}
                     Aún no has escrito un perfil
@@ -117,9 +117,6 @@
                 {% else %}
                     Aún no has añadido datos
                 {% endif %}
-                
-
-                
 
             <div class="d-flex justify-content-end">
                 <a href="{% url "agregar-estudios" %}"><button type="button" class="btn btn-primary d-block p-2">AGREGAR  <i class="fas fa-plus-circle"></i></button></a>
@@ -129,35 +126,42 @@
 
                 <h3 class="mb-3">Experiencia Laboral</h3>
 
-                    <ul>
-                        <li class="mt-3">
-                            <h4>Desarrollador Backend</h4>
-                            <p>Google</p>
-                            <h4>Descripción:</h4>
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci id distinctio, perspiciatis, et inventore iste veritatis non, odit at incidunt asperiores? Eius, quidem! Consequatur, corrupti. Nemo dolores obcaecati mollitia enim?</p>
-                            <div class="row mt-3">
+                    {% if cv.experiencia|length > 0 %}
+                        {% for experiencia in cv.experiencia %}
+                            <ul>
+                                <li class="mt-3">
+                                <h4>{{ experiencia.puesto }}</h4>
+                                <p>{{ experiencia.empresa }}</p>
+                                <h4>Descripción:</h4>
+                                {{ experiencia.descripcion|safe }}
+                                <div class="row mt-3">
                                 <div class="col-3">
-                                    <strong>Desde: </strong><p>2019</p>
+                                    <strong>Desde: </strong><p>{{ experiencia.mes_desde }} - {{ experiencia.anio_desde }}</p>
                                 </div>
                                 <div class="col-3">
-                                    <strong>Hasta: </strong><p>Actualidad</p>
+                                    <strong>Hasta: </strong><p>{{ experiencia.mes_hasta }} - {{ experiencia.anio_hasta }}</p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-2">
-                                    <a href="/mi-cv/editar/experiencia/<%= exp._id %>"><button type="button" class="btn btn-primary d-block">EDITAR  <i class="fas fa-pen"></i></button></a>
+                                    <a href="{% url 'editar-experiencia' experiencia.id %}"><button type="button" class="btn btn-primary d-block">EDITAR  <i class="fas fa-pen"></i></button></a>
                                 </div>
                                 <div class="col-2">
-                                    <a href="/mi-cv/eliminar/experiencia/<%= exp._id %>"><button type="button" class="btn btn-danger d-block">BORRAR  <i class="fas fa-trash-alt"></i></button></a>
+                                    <a href="{% url 'eliminar-experiencia' experiencia.id %}"><button type="button" class="btn btn-danger d-block">BORRAR  <i class="fas fa-trash-alt"></i></button></a>
                                 </div>
                             </div>
                         </li>
                     </ul>
 
-                <div class="d-flex justify-content-end">
-                    <a href="/mi-cv/agregar/experiencia"><button type="button" class="btn btn-primary d-block p-2">AGREGAR  <i class="fas fa-plus-circle"></i></button></a>
-                </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>Aún no has añadido experiencias laborales</p>
+                    {% endif %}
 
+                    <div class="d-flex justify-content-end">
+                        <a href="/mi-cv/agregar/experiencia"><button type="button" class="btn btn-primary d-block p-2">AGREGAR  <i class="fas fa-plus-circle"></i></button></a>
+                    </div>
+                    
                 <hr class="bg-primary border-2 border-top border-primary">
 
                 <h3 class="mb-3">Conocimientos y Habilidades</h3>

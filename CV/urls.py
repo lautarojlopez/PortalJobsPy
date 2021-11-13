@@ -1,3 +1,4 @@
+from os import name
 from django.urls import path, include
 
 from .views import *
@@ -9,5 +10,8 @@ urlpatterns = [
     path('agregar/estudios', agregar_estudios, name="agregar-estudios"),
     path('editar/estudios/<int:id>/', editar_estudios, name="editar-estudios"),
     path('eliminar/estudios/<int:id>', eliminar_estudios, name="eliminar-estudios"),
-    path('editar/conocimientos-y-habilidades', editar_cyh, name="editar-cyh")
+    path('editar/conocimientos-y-habilidades', editar_cyh, name="editar-cyh"),
+    path('agregar/experiencia', agregar_experiencia, name="agregar-experiencia"),
+    path('eliminar/experiencia/<int:id>', eliminar_experiencia, name="eliminar-experiencia"),
+    path('editar/experiencia/<int:id>', editar_experiencia, name='editar-experiencia')
 ]
