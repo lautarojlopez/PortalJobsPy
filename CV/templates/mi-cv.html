@@ -198,16 +198,32 @@
                 <h3 class="mb-3">Otros</h3>
 
                 <h4>Licencia de conducir:</h4>
-                <p>No Posee</p>
+                <p>
+                {% for licencia in cv.licencias %}
+                    {{ licencia }}
+                {% endfor %}
+                </p>
 
                 <h4>Movilidad Propia:</h4>
-                <p>No</p>
+                {% if cv.movilidad_propia %}
+                    <p>Sí</p>
+                {% else %}
+                    <p>No</p>
+                {% endif %}
 
                 <h4>Disponibilidad para viajar:</h4>
-                <p>No</p>
+                {% if cv.disponibilidad_viajar %}
+                    <p>Sí</p>
+                {% else %}
+                    <p>No</p>
+                {% endif %}
 
                 <h4>Disponibilidad para mudarse:</h4>
-                <p>No</p>
+                {% if cv.disponibilidad_mudarse %}
+                    <p>Sí</p>
+                {% else %}
+                    <p>No</p>
+                {% endif %}
 
                 <div class="d-flex justify-content-end">
                     <a href="/mi-cv/editar/otros"><button type="button" class="btn btn-primary d-block p-2">EDITAR  <i class="fas fa-pen"></i></button></a>

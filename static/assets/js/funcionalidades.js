@@ -46,3 +46,4 @@ function formatear_fecha(fecha) {
 fecha_nacimiento = document.querySelector("#fechanacimiento").innerHTML.split('-')
 fecha_formateada = formatear_fecha(fecha_nacimiento)
 document.querySelector("#fechanacimiento").innerHTML = fecha_formateada
+

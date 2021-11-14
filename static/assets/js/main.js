@@ -5,7 +5,204 @@
 * License: https://bootstrapmade.com/license/
 */
 
-console.log("AAAAAAAAAAAAAAAA")
+if(window.location.pathname == "/mi-cv/editar/otros"){
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  const licenciaNoPosee = document.querySelector("#NoPosee");
+
+  window.addEventListener('DOMContentLoaded', (event) => {
+    if(licenciaNoPosee.checked){
+      document.querySelector('.tipo-licencias').remove();
+    }
+  });
+
+  licenciaNoPosee.addEventListener('change', function() {
+    if (this.checked) {
+      document.querySelector('.tipo-licencias').remove();
+    } else {
+      const tipoLicencias = `
+                          <div class="row">
+                              <div class="col-1">
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="A1" name="licencia">
+                                      <label class="form-check-label" for="A1">
+                                        A1
+                                      </label>
+                                  </div>
+                              </div>
+                              <div class="col-1">
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="A2" name="licencia">
+                                      <label class="form-check-label" for="defaultCheck1">
+                                        A2
+                                      </label>
+                                  </div>
+                              </div>
+                              <div class="col-1">
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="A2.1" name="licencia">
+                                      <label class="form-check-label" for="defaultCheck1">
+                                        A2.1
+                                      </label>
+                                  </div>
+                              </div>
+                              <div class="col-1">
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="A2.2" name="licencia">
+                                      <label class="form-check-label" for="defaultCheck1">
+                                        A2.2
+                                      </label>
+                                  </div>
+                              </div>
+                          </div>
+                          
+                          <div class="row">
+                              <div class="col-1">
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="A3" name="licencia">
+                                      <label class="form-check-label" for="A1">
+                                        A3
+                                      </label>
+                                  </div>
+                              </div>
+                              <div class="col-1">
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="B1" name="licencia">
+                                      <label class="form-check-label" for="defaultCheck1">
+                                        B1
+                                      </label>
+                                  </div>
+                              </div>
+                              <div class="col-1">
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="B2" name="licencia">
+                                      <label class="form-check-label" for="defaultCheck1">
+                                        B2
+                                      </label>
+                                  </div>
+                              </div>
+                              <div class="col-1">
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="C1" name="licencia">
+                                      <label class="form-check-label" for="defaultCheck1">
+                                        C1
+                                      </label>
+                                  </div>
+                              </div>
+                          </div>
+
+                              <div class="row">
+                                  <div class="col-1">
+                                      <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="C2" name="licencia" name="A1">
+                                          <label class="form-check-label" for="A1">
+                                            C2
+                                          </label>
+                                      </div>
+                                  </div>
+                                  <div class="col-1">
+                                      <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="C3" name="licencia">
+                                          <label class="form-check-label" for="defaultCheck1">
+                                            C3
+                                          </label>
+                                      </div>
+                                  </div>
+                                  <div class="col-1">
+                                      <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="D1" name="licencia">
+                                          <label class="form-check-label" for="defaultCheck1">
+                                            D1
+                                          </label>
+                                      </div>
+                                  </div>
+                                  <div class="col-1">
+                                      <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="D2" name="licencia">
+                                          <label class="form-check-label" for="defaultCheck1">
+                                            D2
+                                          </label>
+                                      </div>
+                                  </div>
+                              </div>
+
+                          <div class="row">
+                              <div class="col-1">
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="D3" name="licencia">
+                                      <label class="form-check-label" for="A1">
+                                        D3
+                                      </label>
+                                  </div>
+                              </div>
+                              <div class="col-1">
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="D4" name="licencia">
+                                      <label class="form-check-label" for="defaultCheck1">
+                                        D4
+                                      </label>
+                                  </div>
+                              </div>
+                              <div class="col-1">
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="E1" name="licencia">
+                                      <label class="form-check-label" for="defaultCheck1">
+                                        E1
+                                      </label>
+                                  </div>
+                              </div>
+                              <div class="col-1">
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="E2" name="licencia">
+                                      <label class="form-check-label" for="defaultCheck1">
+                                        E2
+                                      </label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-1">
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="F" name="licencia">
+                                      <label class="form-check-label" for="A1">
+                                        F
+                                      </label>
+                                  </div>
+                              </div>
+                              <div class="col-1">
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="G1" name="licencia">
+                                      <label class="form-check-label" for="defaultCheck1">
+                                        G1
+                                      </label>
+                                  </div>
+                              </div>
+                              <div class="col-1">
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="G2" name="licencia">
+                                      <label class="form-check-label" for="defaultCheck1">
+                                        G2
+                                      </label>
+                                  </div>
+                              </div>
+                              <div class="col-1">
+                                  <div class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="G3" name="licencia">
+                                      <label class="form-check-label" for="defaultCheck1">
+                                        G3
+                                      </label>
+                                  </div>
+                              </div>
+                          </div>
+      `;
+
+      const listaLicencias = document.createElement('div');
+      listaLicencias.classList.add('tipo-licencias');
+      listaLicencias.innerHTML = tipoLicencias;
+      document.querySelector('.licencias').appendChild(listaLicencias);
+
+    }
+  });
+}
 
 (function() {
   "use strict";

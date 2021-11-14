@@ -17,7 +17,8 @@ class Migration(migrations.Migration):
 
 # Función para setear por defecto las licencias de conducir
 def licencia_default():
-    return(list(["No Posee"]))
+    no_posee = ['No Posee']
+    return list(no_posee)
 # Función para setear por defecto como arreglo vacio los arreglos de Experiencia y Estudios
 def arreglo_vacio():
     return(list())
@@ -44,7 +45,7 @@ class CV(models.Model):
 
     # Array de licencias de conducir
     licencias = ArrayField(
-        models.CharField(max_length=5),
+        models.CharField(max_length=10),
         null=True,
         default=licencia_default
     )

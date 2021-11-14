@@ -13,7 +13,7 @@ def mi_cv(request):
     return render(request, 'mi-cv.html', { "cv": cv })
 
 # Edicion de datos personales
-def datos_personales(request):
+def editar_datos_personales(request):
     if request.method == "GET":
         # Busca el cv en la base de datos
         cv = CV.objects.get(id=request.userprofile.cv_id)
@@ -26,32 +26,38 @@ def datos_personales(request):
         if form_datos_personales.is_valid():
             # Busca el CV del usuario en la base de datos
             cv = CV.objects.get(id=request.userprofile.cv_id)
+            try:
+                # Reemplaza con los datos del formulario
+                cv.nombre = form_datos_personales.cleaned_data['nombre']
+                cv.fecha_nacimiento = form_datos_personales.cleaned_data['fecha_nacimiento']
+                cv.genero = form_datos_personales.cleaned_data['genero']
+                cv.DNI = form_datos_personales.cleaned_data['DNI']
+                cv.nacionalidad = form_datos_personales.cleaned_data['nacionalidad']
+                cv.localidad = form_datos_personales.cleaned_data['localidad']
+                cv.direccion = form_datos_personales.cleaned_data['direccion']
+                cv.codigo_postal = form_datos_personales.cleaned_data['codigo_postal']
+                cv.telefono = form_datos_personales.cleaned_data['telefono']
+                cv.email = form_datos_personales.cleaned_data['email']
+                cv.completo = True
+                # Guarda los cambios en la base de datos
+                cv.save()
 
-            # Reemplaza con los datos del formulario
-            cv.nombre = form_datos_personales.cleaned_data['nombre']
-            cv.fecha_nacimiento = form_datos_personales.cleaned_data['fecha_nacimiento']
-            cv.genero = form_datos_personales.cleaned_data['genero']
-            cv.DNI = form_datos_personales.cleaned_data['DNI']
-            cv.nacionalidad = form_datos_personales.cleaned_data['nacionalidad']
-            cv.localidad = form_datos_personales.cleaned_data['localidad']
-            cv.direccion = form_datos_personales.cleaned_data['direccion']
-            cv.codigo_postal = form_datos_personales.cleaned_data['codigo_postal']
-            cv.telefono = form_datos_personales.cleaned_data['telefono']
-            cv.email = form_datos_personales.cleaned_data['email']
+                # Redirecciona con mensaje de exito
+                messages.success(request, 'Tus datos han sido guardados')
+                return redirect("MiCV")
 
-            # Guarda los cambios en la base de datos
-            cv.save()
+            except:
 
-            # Redirecciona con mensaje de exito
-            messages.success(request, 'Tus datos han sido guardados')
-            return redirect("MiCV")
+                # Redirecciona con mensaje de error
+                messages.error(request, 'Ups... Algo ha salido mal. Vuelve a intentarlo.')
+                return redirect("MiCV")
 
         else:
 
             return render(request, 'datos-personales.html', { "errors": form_datos_personales.errors })
 
 # Edicion de perfil
-def perfil(request):
+def editar_perfil(request):
     # Busca el CV del usuario en la base de datos
     cv = CV.objects.get(id=request.userprofile.cv_id)
 
@@ -298,3 +304,31 @@ def editar_experiencia(request, id):
                 return redirect("MiCV")
         else:
             return render(request, 'editar-experiencia.html', { "errors": form_experiencia.errors, "experiencia": experiencia })
+
+def editar_otros(request):
+    # Busca el CV del usuario en la base de datos
+    cv = CV.objects.get(id=request.userprofile.cv_id)
+    if request.method == "GET":
+        return render(request, 'editar-otros.html', {"cv": cv})
+    if request.method == "POST":
+        try:
+            licencias = request.POST.getlist('licencia')
+            cv.licencias = licencias
+            cv.movilidad_propia = bool(int(request.POST['movilidad_propia']))
+            cv.disponibilidad_viajar = bool(int(request.POST['disponibilidad_viajar']))
+            cv.disponibilidad_mudarse = bool(int(request.POST['disponibilidad_mudarse']))
+            cv.save()
+            messages.success(request, 'Datos editados correctamente')
+            return redirect("MiCV")
+        except:
+            # Redirecciona con mensaje de error
+            messages.error(request, 'Ups... Algo ha salido mal. Vuelve a intentarlo.')
+            return redirect("MiCV")
+
+def agregar_idioma(request):
+    # Busca el CV del usuario en la base de datos
+    cv = CV.objects.get(id=request.userprofile.cv_id)
+    if request.method == "GET":
+        return render(request, 'agregar-idioma.html')
+    if request.method == "POST":
+        return JsonResponse(request.POST)
