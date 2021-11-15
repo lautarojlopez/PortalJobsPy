@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Editar Idioma
+{% endblock title %}
+
+{% block content %}
+<section class="formulario-registro">
+    <div class="container">
+        <div class="row gy-4 align-items-center mt-5">
+            <div class="col-lg-10">
+                
+                <h2 class="display-5">Editar Idioma</h2>
+                  
+                <hr class="bg-primary border-2 border-top border-primary">
+
+                <form action="{% url 'editar-idioma' idioma.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="container">
+                        <div class="row">
+
+                            <div class="col-6">
+                                <h4>Idioma</h4>
+                                <select class="form-select mb-3" name="idioma" aria-label="">
+                                    <option id="Alemán">Alemán</option>
+                                    <option id="Chino Mandarín">Chino Mandarín</option>
+                                    <option id="Coreano">Coreano</option>
+                                    <option id="Español">Español</option>
+                                    <option id="Francés">Francés</option>
+                                    <option id="Holandés">Holandés</option>
+                                    <option id="Inglés">Inglés</option>
+                                    <option id="Italiano">Italiano</option>
+                                    <option id="Japonés">Japonés</option>
+                                    <option id="Portugués">Portugués</option>
+                                </select>
+                            </div>
+
+                            <div class="col-6">
+                                <h4>Nivel</h4>
+                                <select class="form-select mb-3" name="nivel" aria-label="">
+                                    <option value="Básico">Básico</option>
+                                    <option value="Intermedio">Intermedio</option>
+                                    <option value="Avanzado">Avanzado</option>
+                                    <option value="Nativo">Nativo</option>
+                                </select>
+                            </div>
+
+                            <div class="d-flex justify-content-end">
+                                <a href="{% url 'editar-idioma' idioma.id %}"><button type="submit" class="btn btn-primary d-block p-2">GUARDAR  <i class="far fa-save"></i></button></a>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

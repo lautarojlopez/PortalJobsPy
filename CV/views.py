@@ -325,10 +325,79 @@ def editar_otros(request):
             messages.error(request, 'Ups... Algo ha salido mal. Vuelve a intentarlo.')
             return redirect("MiCV")
 
+# Agrega un idioma al arreglo de idiomas
 def agregar_idioma(request):
     # Busca el CV del usuario en la base de datos
     cv = CV.objects.get(id=request.userprofile.cv_id)
+    idiomas = cv.idiomas
+
     if request.method == "GET":
         return render(request, 'agregar-idioma.html')
     if request.method == "POST":
-        return JsonResponse(request.POST)
+        try:
+            # ID para luego poder editar o eliminar el idioma del arreglo
+            if len(cv.idiomas) == 0:
+                # Si el arreglo está vacío el ID será 0
+                id = 0
+            else:
+                # Sino, toma el id del ultimo elemento del arreglo y le suma 1
+                id = int(cv.idiomas[-1]['id']) + 1
+            idioma = {
+                "id": id,
+                "idioma": request.POST['idioma'],
+                "nivel": request.POST['nivel'],
+            }
+            idiomas.append(idioma)
+            cv.save()
+            messages.success(request, 'Idioma agregado correctamente')
+            return redirect("MiCV")
+        except:
+            # Redirecciona con mensaje de error
+            messages.error(request, 'Ups... Algo ha salido mal. Vuelve a intentarlo.')
+            return redirect("MiCV")
+
+# Eliminar un idioma del arreglo de idiomas
+def eliminar_idioma(request, id):
+
+    # Busca el CV del usuario en la base de datos
+    cv = CV.objects.get(id=request.userprofile.cv_id)
+    # Busca el idioma a eliminar en el arreglo de idiomas
+    for _idioma in cv.idiomas:
+        if int(_idioma['id']) == id:
+            idioma = _idioma
+
+    if request.method == "GET":
+        return render(request, 'eliminar-idioma.html', { "idioma": idioma })
+    if request.method == "POST":
+        try:
+            cv.idiomas.remove(idioma)
+            cv.save()
+            messages.success(request, 'Idioma eliminado correctamente')
+            return redirect("MiCV")
+        except:
+            # Redirecciona con mensaje de error
+            messages.error(request, 'Ups... Algo ha salido mal. Vuelve a intentarlo.')
+            return redirect("MiCV")
+
+def editar_idioma(request, id):
+
+    # Busca el CV del usuario en la base de datos
+    cv = CV.objects.get(id=request.userprofile.cv_id)
+    # Busca el idioma a eliminar en el arreglo de idiomas
+    for _idioma in cv.idiomas:
+        if int(_idioma['id']) == id:
+            idioma = _idioma
+
+    if request.method == "GET":
+        return render(request, 'editar-idioma.html', { "idioma": idioma })
+    if request.method == "POST":
+        try:
+            idioma['idioma'] = request.POST['idioma']
+            idioma['nivel'] = request.POST['nivel']
+            cv.save()
+            messages.success(request, 'Idioma editado correctamente')
+            return redirect("MiCV")
+        except:
+            # Redirecciona con mensaje de error
+            messages.error(request, 'Ups... Algo ha salido mal. Vuelve a intentarlo.')
+            return redirect("MiCV")

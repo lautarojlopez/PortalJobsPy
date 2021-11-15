@@ -50,6 +50,14 @@ class CV(models.Model):
         default=licencia_default
     )
 
+    # Array de idiomas
+    idiomas = ArrayField(
+        HStoreField(),
+        null=True,
+        blank=True,
+        default=arreglo_vacio
+    )
+
     # Array de experiencias laborales
     experiencia = ArrayField(
         HStoreField(),
