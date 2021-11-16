@@ -25,6 +25,12 @@
         {% endfor %}
     {% endif %}
 
+        {% if not cv.completo %}
+            <div class="alert alert-warning" role="alert">
+                <p><strong>ATENCIÓN:</strong> Tu CV no posee los suficientes datos como para poder postularte a las ofertas de trabajo. Actualizalo llenando tus <strong>DATOS PERSONALES</strong> y de <strong>CONTACTO</strong></p>
+            </div>
+        {% endif %}
+
         <h2 class="text-center">Mi CV</h2>
 
         <hr class="bg-primary border-2 border-top border-primary">
@@ -63,7 +69,7 @@
                         <p>{% if cv.email is not None %} {{ cv.email }} {% else %} N/A {% endif %}</p>
                     </div>
                     <div class="col-4">
-                        <img src="{% static "assets/img/fotocv.png" %}" style="width: 200px;" alt="">
+                        <img src="{% static cv.imagen.url %}" style="width: 200px;" alt="">
                     </div>
                 </div>
                 <div class="d-flex justify-content-end">

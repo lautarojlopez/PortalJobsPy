@@ -20,7 +20,7 @@
 
         <hr class="bg-primary border-2 border-top border-primary">
 
-            <form action="{% url "datos-personales" %}" method="POST">
+            <form action="{% url "datos-personales" %}" method="POST" enctype="multipart/form-data">
 
                 {% csrf_token %}
 
@@ -339,7 +339,11 @@
                                 </div>
                         </div>
                         <div class="col-4">
-                            <img src="{% static "assets/img/fotocv.png" %}" style="width: 200px;" alt="">
+                            <img src="{% static cv.imagen.url %}" style="width: 200px;" alt="">
+                            <div class="form-group custom-file">
+                                <input type="file" class="custom-file-input" name="imagen">
+                                <label class="custom-file-label" for="imagen">Choose file</label>
+                            </div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">

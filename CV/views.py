@@ -2,10 +2,17 @@ from django.contrib import messages
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from CV.models import CV
+from PortalJobs.settings import BASE_DIR
 from .forms import FormDatosPersonales, FormEstudios, FormExperiencia
+from django.contrib.auth.decorators import login_required
+import os
 
 # Create your views here.
+@login_required
 def mi_cv(request):
+    # Si no es una cuenta de tipo postulante, redirecciona al inicio
+    if not request.userprofile.tipo_cuenta == "Postulante":
+        return redirect('403')
 
     # Busca el CV del usuario en la base de datos
     cv = CV.objects.get(id=request.userprofile.cv_id)
@@ -13,7 +20,12 @@ def mi_cv(request):
     return render(request, 'mi-cv.html', { "cv": cv })
 
 # Edicion de datos personales
+@login_required
 def editar_datos_personales(request):
+    # Si no es una cuenta de tipo postulante, redirecciona al inicio
+    if not request.userprofile.tipo_cuenta == "Postulante":
+        return redirect('403')
+
     if request.method == "GET":
         # Busca el cv en la base de datos
         cv = CV.objects.get(id=request.userprofile.cv_id)
@@ -21,23 +33,28 @@ def editar_datos_personales(request):
 
     elif request.method == "POST":
         
-        form_datos_personales = FormDatosPersonales(request.POST)
+        form_datos_personales = FormDatosPersonales(request.POST, request.FILES)
 
         if form_datos_personales.is_valid():
+            datos = form_datos_personales.cleaned_data
+            print(datos)
             # Busca el CV del usuario en la base de datos
             cv = CV.objects.get(id=request.userprofile.cv_id)
             try:
                 # Reemplaza con los datos del formulario
-                cv.nombre = form_datos_personales.cleaned_data['nombre']
-                cv.fecha_nacimiento = form_datos_personales.cleaned_data['fecha_nacimiento']
-                cv.genero = form_datos_personales.cleaned_data['genero']
-                cv.DNI = form_datos_personales.cleaned_data['DNI']
-                cv.nacionalidad = form_datos_personales.cleaned_data['nacionalidad']
-                cv.localidad = form_datos_personales.cleaned_data['localidad']
-                cv.direccion = form_datos_personales.cleaned_data['direccion']
-                cv.codigo_postal = form_datos_personales.cleaned_data['codigo_postal']
-                cv.telefono = form_datos_personales.cleaned_data['telefono']
-                cv.email = form_datos_personales.cleaned_data['email']
+                cv.nombre = datos['nombre']
+                cv.fecha_nacimiento = datos['fecha_nacimiento']
+                cv.genero = datos['genero']
+                cv.DNI = datos['DNI']
+                cv.nacionalidad = datos['nacionalidad']
+                cv.localidad = datos['localidad']
+                cv.direccion = datos['direccion']
+                cv.codigo_postal = datos['codigo_postal']
+                cv.telefono = datos['telefono']
+                cv.email = datos['email']
+                if datos['imagen'] is not None:
+                    cv.imagen = datos['imagen']
+
                 cv.completo = True
                 # Guarda los cambios en la base de datos
                 cv.save()
@@ -46,8 +63,7 @@ def editar_datos_personales(request):
                 messages.success(request, 'Tus datos han sido guardados')
                 return redirect("MiCV")
 
-            except:
-
+            except Exception as e:
                 # Redirecciona con mensaje de error
                 messages.error(request, 'Ups... Algo ha salido mal. Vuelve a intentarlo.')
                 return redirect("MiCV")
@@ -57,7 +73,12 @@ def editar_datos_personales(request):
             return render(request, 'datos-personales.html', { "errors": form_datos_personales.errors })
 
 # Edicion de perfil
+@login_required
 def editar_perfil(request):
+    # Si no es una cuenta de tipo postulante, redirecciona al inicio
+    if not request.userprofile.tipo_cuenta == "Postulante":
+        return redirect('403')
+
     # Busca el CV del usuario en la base de datos
     cv = CV.objects.get(id=request.userprofile.cv_id)
 
@@ -79,7 +100,12 @@ def editar_perfil(request):
             return redirect("MiCV")
 
 # Agregar estudios al arreglo de estudios en CV
+@login_required
 def agregar_estudios(request):
+    # Si no es una cuenta de tipo postulante, redirecciona al inicio
+    if not request.userprofile.tipo_cuenta == "Postulante":
+        return redirect('403')
+
     if request.method == "GET":
         return render(request, 'agregar-estudios.html')
     elif request.method == "POST":
@@ -133,7 +159,12 @@ def agregar_estudios(request):
             return render(request, 'agregar-estudios.html', { "errors": form_estudios.errors })
 
 # Editar un estudio
+@login_required
 def editar_estudios(request, id):
+    # Si no es una cuenta de tipo postulante, redirecciona al inicio
+    if not request.userprofile.tipo_cuenta == "Postulante":
+        return redirect('403')
+        
     # Busca el CV del usuario en la base de datos
     cv = CV.objects.get(id=request.userprofile.cv_id)
     # Busca el objeto a editar en el arreglo de estudios
@@ -173,7 +204,12 @@ def editar_estudios(request, id):
             return render(request, 'editar-estudios.html', { "errors": form_estudios.errors, "estudio": estudios })
 
 # Eliminar estudios del arreglo de estudios en CV
+@login_required
 def eliminar_estudios(request, id):
+    # Si no es una cuenta de tipo postulante, redirecciona al inicio
+    if not request.userprofile.tipo_cuenta == "Postulante":
+        return redirect('403')
+        
 
     # Busca el CV del usuario en la base de datos
     cv = CV.objects.get(id=request.userprofile.cv_id)
@@ -195,7 +231,12 @@ def eliminar_estudios(request, id):
             return redirect("MiCV")
 
 # Edicion de Conocimientos y Habilidades
+@login_required
 def editar_cyh(request):
+    # Si no es una cuenta de tipo postulante, redirecciona al inicio
+    if not request.userprofile.tipo_cuenta == "Postulante":
+        return redirect('403')
+        
     # Busca el CV del usuario en la base de datos
     cv = CV.objects.get(id=request.userprofile.cv_id)
     if request.method == "GET":
@@ -213,7 +254,12 @@ def editar_cyh(request):
             return redirect("MiCV")
 
 # Agregar experiencia al arreglo experiencias en CV
+@login_required
 def agregar_experiencia(request):
+    # Si no es una cuenta de tipo postulante, redirecciona al inicio
+    if not request.userprofile.tipo_cuenta == "Postulante":
+        return redirect('403')
+        
     if request.method == "GET":
         return render(request, 'agregar-experiencia.html')
     if request.method == "POST":
@@ -253,7 +299,13 @@ def agregar_experiencia(request):
         else:
             return render(request, 'agregar-experiencia.html', { "errors": form_experiencia.errors })
 
+# Eliminar una experiencia laboral del arreglo de experiencias
+@login_required
 def eliminar_experiencia(request, id):
+    # Si no es una cuenta de tipo postulante, redirecciona al inicio
+    if not request.userprofile.tipo_cuenta == "Postulante":
+        return redirect('403')
+        
     # Busca el CV del usuario en la base de datos
     cv = CV.objects.get(id=request.userprofile.cv_id)
     # Busca la experiencia a eliminar en el arreglo de experiencias
@@ -273,7 +325,11 @@ def eliminar_experiencia(request, id):
             return redirect("MiCV")
 
 # Editar una experiencia laboral
+@login_required
 def editar_experiencia(request, id):
+    # Si no es una cuenta de tipo postulante, redirecciona al inicio
+    if not request.userprofile.tipo_cuenta == "Postulante":
+        return redirect('403')
 
     # Busca el CV del usuario en la base de datos
     cv = CV.objects.get(id=request.userprofile.cv_id)
@@ -305,7 +361,13 @@ def editar_experiencia(request, id):
         else:
             return render(request, 'editar-experiencia.html', { "errors": form_experiencia.errors, "experiencia": experiencia })
 
+# Editar datos adicionales
+@login_required
 def editar_otros(request):
+    # Si no es una cuenta de tipo postulante, redirecciona al inicio
+    if not request.userprofile.tipo_cuenta == "Postulante":
+        return redirect('403')
+        
     # Busca el CV del usuario en la base de datos
     cv = CV.objects.get(id=request.userprofile.cv_id)
     if request.method == "GET":
@@ -326,7 +388,12 @@ def editar_otros(request):
             return redirect("MiCV")
 
 # Agrega un idioma al arreglo de idiomas
+@login_required
 def agregar_idioma(request):
+    # Si no es una cuenta de tipo postulante, redirecciona al inicio
+    if not request.userprofile.tipo_cuenta == "Postulante":
+        return redirect('403')
+        
     # Busca el CV del usuario en la base de datos
     cv = CV.objects.get(id=request.userprofile.cv_id)
     idiomas = cv.idiomas
@@ -357,7 +424,12 @@ def agregar_idioma(request):
             return redirect("MiCV")
 
 # Eliminar un idioma del arreglo de idiomas
+@login_required
 def eliminar_idioma(request, id):
+    # Si no es una cuenta de tipo postulante, redirecciona al inicio
+    if not request.userprofile.tipo_cuenta == "Postulante":
+        return redirect('403')
+        
 
     # Busca el CV del usuario en la base de datos
     cv = CV.objects.get(id=request.userprofile.cv_id)
@@ -379,8 +451,16 @@ def eliminar_idioma(request, id):
             messages.error(request, 'Ups... Algo ha salido mal. Vuelve a intentarlo.')
             return redirect("MiCV")
 
+# Editar un idioma del arreglo de idiomas
+@login_required
 def editar_idioma(request, id):
-
+    # Si no es una cuenta de tipo postulante, redirecciona al inicio
+    if not request.userprofile.tipo_cuenta == "Postulante":
+        return redirect('403')
+        
+    # Si no es una cuenta de tipo postulante, redirecciona al inicio
+    if not request.userprofile.tipo_cuenta == "Postulante":
+        return redirect('Home')
     # Busca el CV del usuario en la base de datos
     cv = CV.objects.get(id=request.userprofile.cv_id)
     # Busca el idioma a eliminar en el arreglo de idiomas
