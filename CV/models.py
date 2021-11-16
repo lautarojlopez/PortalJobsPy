@@ -41,7 +41,7 @@ class CV(models.Model):
     movilidad_propia = models.BooleanField(null=True, blank=True)
     perfil = models.TextField(null=True, blank=True, default="")
     habilidades = models.TextField(null=True, blank=True, default="")
-    imagen = models.ImageField(upload_to="profile_pics",null=True, blank=True)
+    imagen = models.ImageField(upload_to="profile_pics",null=True, blank=True, default='profile_pics/fotocv.png')
 
     # Array de licencias de conducir
     licencias = ArrayField(
