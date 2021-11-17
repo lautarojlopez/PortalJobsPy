@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ publicacion.puesto }}
+{% endblock title %}
+
+{% block content %}
+<section class="formulario-registro">
+
+    <div class="container">
+        <div class="row gy-4 align-items-center mt-3">
+            <div class="col-lg-10">
+                
+                <h2 class="display-5">{{ publicacion.puesto }}</h2>
+                  
+                <hr class="bg-primary border-2 border-top border-primary">
+
+                <div class="col-12 mt-4">
+                    <p>{{ publicacion.descripcion|safe }}</p>
+                </div>
+
+                <div class="row mb-3 mt-3">
+                    <div class="col-6">
+                        <strong>Localidad:</strong> {{ publicacion.localidad }}
+                    </div>
+                    <div class="col-6">
+                        <strong>Publicado:</strong> {{ publicacion.created_at }}
+                    </div>
+                </div>
+
+                <div class="row mb-3 mt-3">
+                    <div class="col-6 sueldo">
+                        {% if publicacion.sueldo == 0 %}
+                            <strong>Sueldo:</strong> No Especificado
+                        {% else %}
+                            <strong>Sueldo:</strong> ${{ publicacion.sueldo }}
+                        {% endif %}
+                    </div>
+                    <div class="col-6">
+                        <strong>Tipo de Puesto:</strong> {{ publicacion.tipo }}
+                    </div>
+                </div>
+
+                <div class="row mb-3 mt-3">
+                    <div class="col-6">
+                        <strong>Área:</strong> {{ publicacion.area }}
+                    </div>
+                    <div class="col-6">
+                        <strong>Modalidad:</strong> {{ publicacion.modalidad }}
+                    </div>
+                </div>
+
+                {% if request.user.is_authenticated %}
+                    {% if publicacion.autor_id == request.userprofile.id %}
+                        {% comment %} Si es el creador de la publicacion {% endcomment %}
+                        <div class="d-flex justify-content-end mt-3">
+                            <a href="{% url 'editar-publicacion' publicacion.url %}"><button type="submit" class="btn btn-primary d-block p-2">EDITAR <i class="fas fa-pen"></i></button></a>
+                        </div>
+                    {% else %}
+                        {% if request.userprofile.tipo_cuenta == "Postulante" %}
+                            {% if request.userprofile in publicacion.postulantes.all %}
+                                {% comment %} Si ya se postuló {% endcomment %}
+                                <div class="row gy-4 align-items-center mt-3">
+                                    <div class="col-6">
+                                        <div class="alert alert-success" role="alert">
+                                            <p>Ya te has postulado para esta oferta de trabajo</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                {% comment %} Si está autenticado y es postulante {% endcomment %}
+                                <div class="d-flex justify-content-end mt-3">
+                                    <a href="/publicacion/postular/<%= publicacion.url %>"><button type="submit" class="btn btn-primary d-block p-2">POSTULARME <i class="fas fa-briefcase"></i></button></a>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            {% comment %} Si no es postulante {% endcomment %}
+                            <div class="row gy-4 align-items-center mt-3">
+                                <div class="col-8">
+                                    <div class="alert alert-warning" role="alert">
+                                        <p>Solo las cuentas de tipo Postulante pueden aplicar a las ofertas de trabajo</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% else %}
+                    {% comment %} Si no está autenticado {% endcomment %}
+                    <div class="d-flex justify-content-end mt-3">
+                        <a href="/publicacion/postular/<%= publicacion.url %>"><button type="submit" class="btn btn-primary d-block p-2">POSTULARME <i class="fas fa-briefcase"></i></button></a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

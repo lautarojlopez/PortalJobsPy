@@ -16,7 +16,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
-
 from general.views import error_403, home
 
 urlpatterns = [
@@ -27,8 +26,11 @@ urlpatterns = [
     # Usuarios
     path('', include('usuarios.urls')),
 
-    #CV
+    # CV
     path('mi-cv/', include('CV.urls')),
+
+    # Publicaciones
+    path('publicaciones/', include('publicaciones.urls')),
 
     # Errores
     path('403/', error_403, name="403")

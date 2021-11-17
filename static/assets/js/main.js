@@ -4,9 +4,30 @@
 * Author: BootstrapMade.com
 * License: https://bootstrapmade.com/license/
 */
+// Sueldo no especificado
+if(document.querySelector('input[name="sueldo"]') !== undefined){
+  
+  const sueldoNoEspecifica = document.querySelector('#NoEspecificado');
 
+  window.addEventListener('DOMContentLoaded', (event) => {
+    if(sueldoNoEspecifica.checked){
+      document.querySelector('.sueldo').innerHTML = '<input type="hidden" name="sueldo" value="0"></input>';
+    }
+  });
+
+  sueldoNoEspecifica.addEventListener('change', function(){
+    
+    if(this.checked){
+      document.querySelector('.sueldo').innerHTML = '<input type="hidden" name="sueldo" value="0"></input>';
+    } else {
+      document.querySelector('.sueldo').innerHTML = '<input type="text" class="form-control" name="sueldo" placeholder="Sueldo del puesto" value="">';
+    }
+
+  })
+
+}
+// Licencias
 if(window.location.pathname == "/mi-cv/editar/otros"){
-  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
   const licenciaNoPosee = document.querySelector("#NoPosee");
 
   window.addEventListener('DOMContentLoaded', (event) => {

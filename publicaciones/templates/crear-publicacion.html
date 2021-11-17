@@ -1,0 +1,153 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Crear Nueva Publicación
+{% endblock title %}
+
+{% block content %}
+<section class="formulario-registro">
+
+    <div class="container">
+        <div class="row gy-4 align-items-center mt-5">
+            <div class="col-lg-10">
+                
+                <h2 class="display-4">Nueva Publicación</h2>
+                  
+                <hr class="bg-primary border-2 border-top border-primary">
+
+                <form action="{% url 'crear-publicacion' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="container">
+                            {% if errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{errors}}
+                                </div>
+                            {% endif %}
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>Puesto/Título:</h4>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" name="puesto" placeholder="Puesto o título de la publicación" value="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-10 h-100">
+                                <h4>Descripción del puesto:</h4>
+                                <input id="x" type="hidden" value="" name="descripcion">
+                                <trix-editor input="x" placeholder="Escribe una descripción del puesto"></trix-editor>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3 mt-3">
+                            <div class="col-6">
+                                <h4>Sueldo:</h4>
+                                <div class="sueldo">
+                                    <input type="text" class="form-control" name="sueldo" placeholder="Sueldo del puesto" value="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-3 mt-3">
+                            <input class="form-check-input" type="checkbox" value="0" name="licencia" id="NoEspecificado">
+                            <label class="form-check-label">
+                                No Especificado
+                            </label>
+                        </div>
+
+                        <div class="row mt-3 mb-3">
+
+                            <div class="col-6">
+                                <h4>Área de empleo:</h4>
+                                <select name="area" class="form-select">
+                                    <option value="" hidden>-- SELECCIONAR AREA --</option>
+                                    <option value="Abastecimiento y Logística">Abastecimiento y Logística</option>
+                                    <option value="Administración, Contabilidad y Finanzas">Administración, Contabilidad y Finanzas</option>
+                                    <option value="Aduana y Comercio Exterior">Aduana y Comercio Exterior</option>
+                                    <option value="Atención al Cliente, Call Center y Telemarketing">Atención al Cliente, Call Center y Telemarketing</option>
+                                    <option value="Comercial, Ventas y Negocios">Comercial, Ventas y Negocios</option>
+                                    <option value="Comunicación, Relaciones Institucionales y Públicas">Comunicación, Relaciones Institucionales y Públicas</option>
+                                    <option value="Diseño">Diseño</option>
+                                    <option value="Educación, Docencia e Investigación">Educación, Docencia e Investigación</option>
+                                    <option value="Enfermería">Enfermería</option>
+                                    <option value="Gastronomía y Turismo">Gastronomía y Turismo</option>
+                                    <option value="Gerencia y Dirección General">Gerencia y Dirección General</option>
+                                    <option value="Ingeniería Civil y Construcción">Ingeniería Civil y Construcción</option>
+                                    <option value="Ingenierías">Ingenierías</option>
+                                    <option value="Legales">Legales</option>
+                                    <option value="Marketing y Publicidad">Marketing y Publicidad</option>
+                                    <option value="Minería, Petróleo y Gas">Minería, Petróleo y Gas</option>
+                                    <option value="Oficios y Otros">Oficios y Otros</option>
+                                    <option value="Pasantía / Trainee">Pasantía / Trainee</option>
+                                    <option value="Producción y Manufactura">Producción y Manufactura</option>
+                                    <option value="Recursos Humanos y Capacitación">Recursos Humanos y Capacitación</option>
+                                    <option value="Salud, Medicina y Farmacia">Salud, Medicina y Farmacia</option>
+                                    <option value="Secretarias y Recepción">Secretarias y Recepción</option>
+                                    <option value="Seguros">Seguros</option>
+                                    <option value="Tecnología, Sistemas y Telecomunicaciones">Tecnología, Sistemas y Telecomunicaciones</option>
+                                </select>
+                            </div>
+
+                            <div class="col-6">
+                                <h4>Localidad:</h4>
+                                <select name="localidad" class="form-select mb-3">
+                                    <option value="" hidden>-- SELECCIONAR LOCALIDAD --</option>
+                                    <option value="Buenos Aires">Buenos Aires</option>
+                                    <option value="Catamarca">Catamarca</option>
+                                    <option value="Chaco">Chaco</option>
+                                    <option value="Chubut">Chubut</option>
+                                    <option value="Cordoba">Cordoba</option>
+                                    <option value="Corrientes">Corrientes</option>
+                                    <option value="Entre Rios">Entre Rios</option>
+                                    <option value="Formosa">Formosa</option>
+                                    <option value="Jujuy">Jujuy</option>
+                                    <option value="La Pampa">La Pampa</option>
+                                    <option value="La Rioja">La Rioja</option>
+                                    <option value="Mendoza">Mendoza</option>
+                                    <option value="Misiones">Misiones</option>
+                                    <option value="Neuquen">Neuquen</option>
+                                    <option value="Rio Negro">Rio Negro</option>
+                                    <option value="Salta">Salta</option>
+                                    <option value="San Juan">San Juan</option>
+                                    <option value="San Luis">San Luis</option>
+                                    <option value="Santa Cruz">Santa Cruz</option>
+                                    <option value="Santa Fe">Santa Fe</option>
+                                    <option value="Sgo. del Estero">Sgo. del Estero</option>
+                                    <option value="Tierra del Fuego">Tierra del Fuego</option>
+                                    <option value="Tucuman">Tucuman</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3 mt-3">
+                            <div class="col-6">
+                                <h4>Tipo:</h4>
+                                <select name="tipo" class="form-select">
+                                    <option value="" hidden>-- SELECCIONAR TIPO --</option>
+                                    <option value="Part-Time">Part-Time</option>
+                                    <option value="Full-Time">Full-Time</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <h4>Modalidad:</h4>
+                                <select name="modalidad" class="form-select">
+                                    <option value="" hidden>-- SELECCIONAR MODALIDAD --</option>
+                                    <option value="Presencial">Presencial</option>
+                                    <option value="Remoto">Remoto</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-3">
+                            <a href="{% url 'crear-publicacion' %}"><button type="submit" class="btn btn-primary d-block p-2">PUBLICAR  <i class="fas fa-check"></i></button></a>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
+{% endblock content %}
