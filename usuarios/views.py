@@ -4,6 +4,7 @@ from django.contrib import messages
 
 from CV.models import CV
 from .forms import FormTipo, FormularioDatos
+from usuarios.models import UserProfile
 
 # Create your views here.
 
@@ -38,3 +39,10 @@ def registro(request):
             return render(request, 'registro.html', {"errors": form_datos.errors})
 
         return render(request, 'registro.html')
+
+
+def mis_postulaciones(request):
+    # Busca las postulaciones del usuario en la base de datos
+    usuario = UserProfile.objects.get(id=request.userprofile.datos.id)
+    postulaciones = usuario.postulaciones.all()
+    return render(request, 'mis-postulaciones.html', {"postulaciones": postulaciones})

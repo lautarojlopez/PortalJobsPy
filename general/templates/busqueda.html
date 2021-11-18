@@ -1,0 +1,107 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Resultados para "{{ busqueda.puesto }}"
+{% endblock title %}
+
+{% block content %}
+<section class="container p-5 registro">
+    <div class="container">
+      {% if busqueda.puesto %}
+        <h2 class="mb-3" style="text-align: center;">Resultados para "{{ busqueda.puesto }}"</h2>
+      {% else %}
+        <h2 class="mb-3" style="text-align: center;">Buscar</h2>
+      {% endif %}
+      <div class="row align-items-between d-flex" id="buscador">
+        <form class="row g-3 justify-content-around mb-4" action="/buscar" method="GET">
+          <div class="col-4">
+            <input type="text" class="form-control" name="puesto" placeholder="Puesto">
+          </div>
+          <div class="col-3">
+            <select name="area" class="form-select">
+              <option value="" selected>-- TODAS LAS AREAS --</option>
+              <option value="Abastecimiento y Logística">Abastecimiento y Logística</option>
+              <option value="Administración, Contabilidad y Finanzas">Administración, Contabilidad y Finanzas</option>
+              <option value="Aduana y Comercio Exterior">Aduana y Comercio Exterior</option>
+              <option value="Atención al Cliente, Call Center y Telemarketing">Atención al Cliente, Call Center y Telemarketing</option>
+              <option value="Comercial, Ventas y Negocios">Comercial, Ventas y Negocios</option>
+              <option value="Comunicación, Relaciones Institucionales y Públicas">Comunicación, Relaciones Institucionales y Públicas</option>
+              <option value="Diseño">Diseño</option>
+              <option value="Educación, Docencia e Investigación">Educación, Docencia e Investigación</option>
+              <option value="Enfermería">Enfermería</option>
+              <option value="Gastronomía y Turismo">Gastronomía y Turismo</option>
+              <option value="Gerencia y Dirección General">Gerencia y Dirección General</option>
+              <option value="Ingeniería Civil y Construcción">Ingeniería Civil y Construcción</option>
+              <option value="Ingenierías">Ingenierías</option>
+              <option value="Legales">Legales</option>
+              <option value="Marketing y Publicidad">Marketing y Publicidad</option>
+              <option value="Minería, Petróleo y Gas">Minería, Petróleo y Gas</option>
+              <option value="Oficios y Otros">Oficios y Otros</option>
+              <option value="Pasantía / Trainee">Pasantía / Trainee</option>
+              <option value="Producción y Manufactura">Producción y Manufactura</option>
+              <option value="Recursos Humanos y Capacitación">Recursos Humanos y Capacitación</option>
+              <option value="Salud, Medicina y Farmacia">Salud, Medicina y Farmacia</option>
+              <option value="Secretarias y Recepción">Secretarias y Recepción</option>
+              <option value="Seguros">Seguros</option>
+              <option value="Tecnología, Sistemas y Telecomunicaciones">Tecnología, Sistemas y Telecomunicaciones</option>
+                    </select>
+          </div>
+          <div class="col-3">
+            <select name="localidad" class="form-select mb-3">
+              <option value="" selected>-- TODAS LAS LOCALIDADES --</option>
+              <option value="Buenos Aires">Buenos Aires</option>
+              <option value="Catamarca">Catamarca</option>
+              <option value="Chaco">Chaco</option>
+              <option value="Chubut">Chubut</option>
+              <option value="Cordoba">Cordoba</option>
+              <option value="Corrientes">Corrientes</option>
+              <option value="Entre Rios">Entre Rios</option>
+              <option value="Formosa">Formosa</option>
+              <option value="Jujuy">Jujuy</option>
+              <option value="La Pampa">La Pampa</option>
+              <option value="La Rioja">La Rioja</option>
+              <option value="Mendoza">Mendoza</option>
+              <option value="Misiones">Misiones</option>
+              <option value="Neuquen">Neuquen</option>
+              <option value="Rio Negro">Rio Negro</option>
+              <option value="Salta">Salta</option>
+              <option value="San Juan">San Juan</option>
+              <option value="San Luis">San Luis</option>
+              <option value="Santa Cruz">Santa Cruz</option>
+              <option value="Santa Fe">Santa Fe</option>
+              <option value="Sgo. del Estero">Sgo. del Estero</option>
+              <option value="Tierra del Fuego">Tierra del Fuego</option>
+              <option value="Tucuman">Tucuman</option>
+          </select>
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3"><i class="fas fa-search"></i></button>
+          </div>
+        </form>
+      </div>
+
+<section id="services" class="services">
+        <div class="container">
+          <div class="row">
+            {% if resultados %}
+                {% for resultado in resultados %}
+                    <div class="col-lg-4 col-md-6 align-items-stretch mt-2 mb-2">
+                    <div class="icon-box">
+                        <h4><a href="{% url 'ver-publicacion' resultado.url %}">{{ resultado.puesto|truncatewords:10 }}</a></h4>
+                        <p><strong>Localidad:</strong> {{ resultado.localidad }}</p>
+                        <p><strong>Tipo:</strong> {{ resultado.tipo}}</p>
+                        <p><strong>Modalidad:</strong> {{ resultado.modalidad }}</p>
+                        <p><strong>Área:</strong> {{ resultado.area }}</p>
+                    </div>
+                    </div>
+            {% endfor %}
+            {% else %}
+                <p class="text-center">No se encontraron resultados que coincidan con tu búsqueda</p>
+            {% endif %}
+          </div>
+        </div>
+    </div>
+    </section>
+</div>
+</section>
+{% endblock content %}

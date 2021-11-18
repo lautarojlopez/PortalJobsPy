@@ -5,16 +5,19 @@ from .models import Publicacion
 from django.utils.text import slugify
 import shortuuid
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
 
 # Muestra las publicaciones de ofertas de trabajo creadas por el usuario
+@login_required
 def mis_publicaciones(request):
     publicaciones = Publicacion.objects.filter(autor_id=request.userprofile.id).order_by('-created_at')
     return render(request, 'mis-publicaciones.html', {"publicaciones": publicaciones})
 
 # Crear una publicación
+@login_required
 def crear_publicacion(request):
     if request.method == "GET":
         return render(request, 'crear-publicacion.html')
@@ -54,9 +57,14 @@ def ver_publicacion(request, url):
     return render(request, 'ver-publicacion.html', {"publicacion": publicacion})
 
 # Editar una publicación
+@login_required
 def editar_publicacion(request, url):
     # Busca la publicacion a editar en la base de datos
     publicacion = Publicacion.objects.get(url=url)
+
+    # Si el usuario no es el creador de la publicación, redirecciona a 403
+    if not publicacion.autor_id == request.userprofile.id:
+        return redirect('403')
 
     if request.method == "GET":
         return render(request, 'editar-publicacion.html', {"publicacion": publicacion})
@@ -83,9 +91,15 @@ def editar_publicacion(request, url):
             return render(request, 'editar-publicacion.html', {"publicacion": publicacion, "errors": form_publicacion.errors})
 
 # Eliminar una publicación
+@login_required
 def eliminar_publicacion(request, url):
     # Busca la publicacion a editar en la base de datos
     publicacion = Publicacion.objects.get(url=url)
+
+    # Si el usuario no es el creador de la publicación, redirecciona a 403
+    if not publicacion.autor_id == request.userprofile.id:
+        return redirect('403')
+
     if request.method == "GET":
         return render(request, 'eliminar-publicacion.html', {"publicacion": publicacion})
     if request.method == "POST":
@@ -99,6 +113,7 @@ def eliminar_publicacion(request, url):
             return redirect("mis-publicaciones")
 
 # Postular a una oferta
+@login_required
 def postular(request, url):
     # Busca la publicacion a editar en la base de datos
     publicacion = Publicacion.objects.get(url=url)
@@ -109,17 +124,31 @@ def postular(request, url):
         except:
             messages.error(request, 'Ups... Algo ha salido mal. Vuelve a intentarlo.')
             return redirect(f'/publicaciones/{url}')
+    else:
+        return redirect('403')
 
 # Ver postulantes a una oferta de trabajo
+@login_required
 def ver_postulantes(request, url):
     # Busca la publicacion a editar en la base de datos
     publicacion = Publicacion.objects.get(url=url)
-    postulantes = publicacion.postulantes.all()
-    return render(request, 'ver-postulantes.html', {"publicacion": publicacion, "postulantes": postulantes})
+
+    # Si el usuario no es el creador de la publicación, redirecciona a 403
+    if not publicacion.autor_id == request.userprofile.id:
+        return redirect('403')
+    else:
+        postulantes = publicacion.postulantes.all()
+        return render(request, 'ver-postulantes.html', {"publicacion": publicacion, "postulantes": postulantes})
 
 # Ver CV de un postulante
+@login_required
 def cv_postulante(request, url, id):
     # Busca la publicacion a editar en la base de datos
     publicacion = Publicacion.objects.get(url=url)
-    cv_postulante = publicacion.postulantes.all()[id].cv
-    return render(request, 'ver-cv-postulante.html', {"cv": cv_postulante})
+
+    # Si el usuario no es el creador de la publicación, redirecciona a 403
+    if not publicacion.autor_id == request.userprofile.id:
+        return redirect('403')
+    else:
+        cv_postulante = publicacion.postulantes.all()[id].cv
+        return render(request, 'ver-cv-postulante.html', {"cv": cv_postulante})

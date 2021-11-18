@@ -12,8 +12,9 @@ def home(request):
 def error_403(request):
     return render(request, '403.html')
 
-def mis_postulaciones(request):
-    # Busca las postulaciones del usuario en la base de datos
-    usuario = UserProfile.objects.get(id=request.userprofile.datos.id)
-    postulaciones = usuario.postulaciones.all()
-    return render(request, 'mis-postulaciones.html', {"postulaciones": postulaciones})
+def buscar(request):
+    # Busca en la base de datos
+    busqueda = request.GET
+    resultados = Publicacion.objects.filter(puesto__icontains=busqueda['puesto'], area__icontains=busqueda['area'], localidad__icontains=busqueda['localidad'])
+    print(resultados)
+    return render(request, 'busqueda.html', {"busqueda": busqueda, "resultados": resultados})
