@@ -16,12 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
-from general.views import error_403, home
+from general.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # General
     path('', home, name="Home"),
+    path('mis-postulaciones', mis_postulaciones, name='mis-postulaciones'),
 
     # Usuarios
     path('', include('usuarios.urls')),

@@ -33,7 +33,7 @@
                                     <h4>{{ publicacion.puesto }}</h4>
                                 </div>
                                 <div class="col-4">
-                                    <a href="{% url 'ver-publicacion' publicacion.url %}"><button style="color: white;" type="button" class="btn btn-warning d-inline"><i class="fas fa-eye"></i></button></a> <a href="/publicacion/ver-postulantes/<%= publicacion.url %>"><button type="button" class="btn btn-success d-inline"><i class="fas fa-users"></i></button></a> <a href="{% url 'editar-publicacion' publicacion.url %}"><button type="button" class="btn btn-primary d-inline"><i class="fas fa-pen"></i></button></a> <a href="{% url 'eliminar-publicacion' publicacion.url %}"><button type="button" class="btn btn-danger d-inline"><i class="fas fa-trash-alt"></i></button></a>
+                                    <a href="{% url 'ver-publicacion' publicacion.url %}"><button style="color: white;" type="button" class="btn btn-warning d-inline"><i class="fas fa-eye"></i></button></a> <a href="{% url "ver-postulantes" publicacion.url %}"><button type="button" class="btn btn-success d-inline"><i class="fas fa-users"></i></button></a> <a href="{% url 'editar-publicacion' publicacion.url %}"><button type="button" class="btn btn-primary d-inline"><i class="fas fa-pen"></i></button></a> <a href="{% url 'eliminar-publicacion' publicacion.url %}"><button type="button" class="btn btn-danger d-inline"><i class="fas fa-trash-alt"></i></button></a>
                                 </div>
                             </div>
                             <div class="col-12">

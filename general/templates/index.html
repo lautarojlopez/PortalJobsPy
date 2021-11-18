@@ -56,18 +56,20 @@
 
     <!-- ======= Services Section ======= -->
 
-    <h2 style="text-align: center; padding-bottom: 2rem;">Últimos avisos publicados</h2>
+    <h2 style="text-align: center; padding-bottom: 2rem;">Últimos ofertas publicadas</h2>
 
     <section id="services" class="services">
       <div class="container">
 
         <div class="row">
-          {% for i in '123456789'|make_list %}
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-2 mb-2">
+          {% for publicacion in publicaciones %}
+          <div class="col-lg-4 col-md-6 align-items-stretch mt-2 mb-2">
             <div class="icon-box">
-              <div class="icon"><i class="bx bxl-dribbble"></i></div>
-              <h4><a href="">Lorem Ipsum</a></h4>
-              <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+              <h4><a href="{% url 'ver-publicacion' publicacion.url %}">{{ publicacion.puesto }}</a></h4>
+              <p><strong>Localidad:</strong> {{ publicacion.localidad }}</p>
+              <p><strong>Tipo:</strong> {{ publicacion.tipo}}</p>
+              <p><strong>Modalidad:</strong> {{ publicacion.modalidad }}</p>
+              <p><strong>Área:</strong> {{ publicacion.area }}</p>
             </div>
           </div>
           {% endfor %}

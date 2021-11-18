@@ -58,7 +58,7 @@
             <li><a class={% if request.get_full_path == "/" %} "active" {% else %} "" {% endif %} href="{% url "Home" %}">Inicio</a></li>
             {% if request.tipo_cuenta == "Postulante" %}
               <li><a href="{% url "MiCV" %}" class={% if request.get_full_path == "/mi-cv/" %} "active" {% else %} "" {% endif %}>Mi CV</a></li>
-              <li><a href="about.html">Mis Postulaciones</a></li>
+              <li><a href={% url 'mis-postulaciones' %}>Mis Postulaciones</a></li>
             {% else %}
               <li><a href="{% url 'crear-publicacion' %}">Publicar Oferta</a></li>
               <li><a href="{% url 'mis-publicaciones' %}">Mis Publicaciones</a></li>

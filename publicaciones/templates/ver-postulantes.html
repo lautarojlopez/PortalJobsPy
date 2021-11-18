@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Postulantes
+{% endblock title %}
+
+{% block content %}
+<section class="formulario-registro">
+
+    <div class="container">
+        <div class="row gy-4 align-items-center mt-5">
+            <div class="col-lg-10">
+                
+                <h2 class="display-5">Postulantes para "{{ publicacion.puesto }}"</h2>
+
+                <hr class="bg-primary border-2 border-top border-primary mb-5">
+
+                <div class="container">
+
+                    {% for postulante in postulantes %}
+                        <div class="row">
+                            <div class="col-8">
+                                <h4>{{ postulante.cv.nombre }}</h4>
+                            </div>
+                            <div class="col-4">
+                                <a href="{% url 'cv-postulante' url=publicacion.url id=forloop.counter0 %}"><button type="button" class="btn btn-success d-inline">VER CV <i class="fas fa-user"></i></button></a>
+                            </div>
+                        </div>
+                        <div class="col-10">
+                            <hr class="bg-primary border-2 border-top border-secondary">
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

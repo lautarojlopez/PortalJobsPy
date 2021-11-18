@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Mis Postulaciones
+{% endblock title %}
+
+{% block content %}
+<section class="formulario-registro">
+    <div class="container">
+        <div class="row gy-4 align-items-center mt-5">
+            <div class="col-lg-10">
+                
+                <h2 class="display-5">Mis Postulaciones</h2>
+
+                <hr class="bg-primary border-2 border-top border-primary mb-5">
+
+                <div class="container">
+
+                    {% if postulaciones %}
+                        {% for postulacion in postulaciones %}
+                            <div class="row">
+                                <div class="col-8">
+                                    <h4>{{ postulacion.puesto }}</h4>
+                                </div>
+                                <div class="col-4">
+                                    <a href="{% url 'ver-publicacion' postulacion.url %}"><button style="color: white;" type="button" class="btn btn-warning d-inline"><i class="fas fa-eye"></i></button></a>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <hr class="bg-primary border-2 border-top border-secondary">
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>Aún no te has postulado a una oferta de trabajo</p>
+                    {% endif %}
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

@@ -22,7 +22,7 @@
 
                             <div class="col-10 h-100">
                                 <p class="mb-3">Agrega una descripción sobre ti</p>
-                                <input id="x" type="hidden" value={% if cv.perfil is not None %} {{ cv.perfil }} {% else %} "" {% endif %} name="perfil">
+                                <input id="x" type="hidden" value="{% if cv.perfil is not None %} {{ cv.perfil }} {% else %} "" {% endif %}" name="perfil">
                                 <trix-editor input="x"></trix-editor>
                             </div>
 

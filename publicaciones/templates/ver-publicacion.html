@@ -70,7 +70,7 @@
                             {% else %}
                                 {% comment %} Si está autenticado y es postulante {% endcomment %}
                                 <div class="d-flex justify-content-end mt-3">
-                                    <a href="/publicacion/postular/<%= publicacion.url %>"><button type="submit" class="btn btn-primary d-block p-2">POSTULARME <i class="fas fa-briefcase"></i></button></a>
+                                    <a href="{% url 'postular' publicacion.url %}"><button type="submit" class="btn btn-primary d-block p-2">POSTULARME <i class="fas fa-briefcase"></i></button></a>
                                 </div>
                             {% endif %}
                         {% else %}

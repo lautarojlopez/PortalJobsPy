@@ -53,6 +53,7 @@ def ver_publicacion(request, url):
     publicacion = Publicacion.objects.get(url=url)
     return render(request, 'ver-publicacion.html', {"publicacion": publicacion})
 
+# Editar una publicación
 def editar_publicacion(request, url):
     # Busca la publicacion a editar en la base de datos
     publicacion = Publicacion.objects.get(url=url)
@@ -96,3 +97,29 @@ def eliminar_publicacion(request, url):
             # Redirecciona con mensaje de error
             messages.error(request, 'Ups... Algo ha salido mal. Vuelve a intentarlo.')
             return redirect("mis-publicaciones")
+
+# Postular a una oferta
+def postular(request, url):
+    # Busca la publicacion a editar en la base de datos
+    publicacion = Publicacion.objects.get(url=url)
+    if request.userprofile.tipo_cuenta == "Postulante":
+        try:
+            publicacion.postulantes.add(request.userprofile)
+            return redirect(f'/publicaciones/{url}')
+        except:
+            messages.error(request, 'Ups... Algo ha salido mal. Vuelve a intentarlo.')
+            return redirect(f'/publicaciones/{url}')
+
+# Ver postulantes a una oferta de trabajo
+def ver_postulantes(request, url):
+    # Busca la publicacion a editar en la base de datos
+    publicacion = Publicacion.objects.get(url=url)
+    postulantes = publicacion.postulantes.all()
+    return render(request, 'ver-postulantes.html', {"publicacion": publicacion, "postulantes": postulantes})
+
+# Ver CV de un postulante
+def cv_postulante(request, url, id):
+    # Busca la publicacion a editar en la base de datos
+    publicacion = Publicacion.objects.get(url=url)
+    cv_postulante = publicacion.postulantes.all()[id].cv
+    return render(request, 'ver-cv-postulante.html', {"cv": cv_postulante})

@@ -23,7 +23,7 @@
 
                             <div class="col-10 h-100">
                                 <p class="mb-3">Agrega tus conocimientos y habilidades</p>
-                                <input id="x" type="hidden" value={% if cv.habilidades is None %} "" {% else %} {{ cv.habilidades }} {% endif %} name="habilidades">
+                                <input id="x" type="hidden" value="{% if cv.habilidades is None %} "" {% else %} {{ cv.habilidades }} {% endif %}" name="habilidades">
                                 <trix-editor input="x"></trix-editor>
                             </div>
 
