@@ -117,6 +117,11 @@ def eliminar_publicacion(request, url):
 def postular(request, url):
     # Busca la publicacion a editar en la base de datos
     publicacion = Publicacion.objects.get(url=url)
+    # Si el CV no está completo, redirige con mensaje de error
+    if not request.userprofile.cv.completo:
+        messages.error(request, 'Tu CV no está completo. Por favor, completa tus datos haciendo <a href="/mi-cv/editar/datos-personales">click aquí</a>')
+        return redirect(f'/publicaciones/{url}')
+
     if request.userprofile.tipo_cuenta == "Postulante":
         try:
             publicacion.postulantes.add(request.userprofile)

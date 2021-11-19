@@ -22,7 +22,7 @@
               <div class="carousel-content">
                 <h2 class="animate__animated animate__fadeInDown">Encuentra el trabajo de tus sueños</h2>
                 <p class="animate__animated animate__fadeInUp">Crea tu CV en simples pasos y empieza a postularte.</p>
-                <a href="" class="btn-get-started animate__animated animate__fadeInUp">Empezar</a>
+                <a href="{% url 'MiCV' %}" class="btn-get-started animate__animated animate__fadeInUp">Empezar</a>
               </div>
             </div>
           </div>
@@ -33,7 +33,7 @@
               <div class="carousel-content">
                 <h2 class="animate__animated animate__fadeInDown">Publica tus avisos de trabajo</h2>
                 <p class="animate__animated animate__fadeInUp">Registrate ahora y publica tus avisos de forma gratuita</p>
-                <a href="" class="btn-get-started animate__animated animate__fadeInUp">Publicar</a>
+                <a href="{% url 'crear-publicacion' %}" class="btn-get-started animate__animated animate__fadeInUp">Publicar</a>
               </div>
             </div>
           </div>
@@ -119,24 +119,24 @@
           </select>
           </div>
           <div class="col-auto">
-            <button type="submit" class="btn btn-primary mb-3"><i class="fas fa-search"></i></button>
+            <button type="submit" class="btn btn-danger mb-3"><i class="fas fa-search"></i></button>
           </div>
         </form>
       </div>
       <h2 style="text-align: center; padding-bottom: 2rem;">Últimos ofertas publicadas</h2>
       <section id="services" class="services">
         <div class="container">
-          <div class="row">
+          <div class="column">
             {% for publicacion in publicaciones %}
-            <div class="col-lg-4 col-md-6 align-items-stretch mt-2 mb-2">
-              <div class="icon-box">
-                <h4><a href="{% url 'ver-publicacion' publicacion.url %}">{{ publicacion.puesto|truncatewords:10 }}</a></h4>
-                <p><strong>Localidad:</strong> {{ publicacion.localidad }}</p>
-                <p><strong>Tipo:</strong> {{ publicacion.tipo}}</p>
-                <p><strong>Modalidad:</strong> {{ publicacion.modalidad }}</p>
-                <p><strong>Área:</strong> {{ publicacion.area }}</p>
-              </div>
-            </div>
+            <div class="shadow border border-danger rounded p-4 mt-3 mb-3">
+                        <h4><a href="{% url 'ver-publicacion' publicacion.url %}">{{ publicacion.puesto|truncatewords:10 }}</a></h4>
+                        <p>{{ publicacion.descripcion|truncatewords_html:30|safe }}</p>
+                        <p><strong>Localidad:</strong> {{ publicacion.localidad }}</p>
+                        <p><strong>Tipo:</strong> {{ publicacion.tipo}}</p>
+                        <p><strong>Modalidad:</strong> {{ publicacion.modalidad }}</p>
+                        <p><strong>Área:</strong> {{ publicacion.area }}</p>
+                        <a href="{% url 'ver-publicacion' publicacion.url %}" class="btn btn-danger">Leer Más</a>
+                    </div>
             {% endfor %}
       
           </div>

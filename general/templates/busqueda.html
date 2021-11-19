@@ -82,19 +82,19 @@ Resultados para "{{ busqueda.puesto }}"
 
 <section id="services" class="services">
         <div class="container">
-          <div class="row">
+          <div class="column">
             {% if resultados %}
                 {% for resultado in resultados %}
-                    <div class="col-lg-4 col-md-6 align-items-stretch mt-2 mb-2">
-                    <div class="icon-box">
+                    <div class="shadow border border-danger rounded p-4 mt-3 mb-3">
                         <h4><a href="{% url 'ver-publicacion' resultado.url %}">{{ resultado.puesto|truncatewords:10 }}</a></h4>
+                        <p>{{ resultado.descripcion|truncatewords_html:30|safe }}</p>
                         <p><strong>Localidad:</strong> {{ resultado.localidad }}</p>
                         <p><strong>Tipo:</strong> {{ resultado.tipo}}</p>
                         <p><strong>Modalidad:</strong> {{ resultado.modalidad }}</p>
                         <p><strong>Área:</strong> {{ resultado.area }}</p>
+                        <a href="{% url 'ver-publicacion' resultado.url %}" class="btn btn-danger">Leer Más</a>
                     </div>
-                    </div>
-            {% endfor %}
+                {% endfor %}
             {% else %}
                 <p class="text-center">No se encontraron resultados que coincidan con tu búsqueda</p>
             {% endif %}

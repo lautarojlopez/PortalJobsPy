@@ -10,6 +10,11 @@
         <div class="d-flex align-items-center flex-column">
             <h1 class="display-1 mt-5">Error 403</h1>
             <p>Permiso Denegado</p>
+            {% if request.userprofile.tipo_cuenta == "Postulante" %}
+                <p>Solo los reclutadores pueden acceder a esta página</p>
+            {% else %}
+                <p>Solo los postulantes pueden acceder a esta página</p>
+            {% endif %}
         </div>
     </div>
 </section>

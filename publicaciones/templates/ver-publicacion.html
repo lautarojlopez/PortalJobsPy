@@ -9,6 +9,17 @@
 
     <div class="container">
         <div class="row gy-4 align-items-center mt-3">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">  <!-- singular -->
+                        <ul>
+                            <li>
+                                {{ message|safe }}
+                            </li>
+                        </ul>
+                    </div>
+                {% endfor %}
+            {% endif %}
             <div class="col-lg-10">
                 
                 <h2 class="display-5">{{ publicacion.puesto }}</h2>
@@ -68,10 +79,18 @@
                                     </div>
                                 </div>
                             {% else %}
-                                {% comment %} Si está autenticado y es postulante {% endcomment %}
-                                <div class="d-flex justify-content-end mt-3">
-                                    <a href="{% url 'postular' publicacion.url %}"><button type="submit" class="btn btn-primary d-block p-2">POSTULARME <i class="fas fa-briefcase"></i></button></a>
-                                </div>
+
+                                {% if not request.userprofile.cv.completo %}
+                                    {% comment %} Si el CV no está lo suficientemente completo {% endcomment %}
+                                    <div class="alert alert-warning" role="alert">
+                                        <p><strong>ATENCIÓN:</strong> Tu CV no posee los suficientes datos como para poder postularte a las ofertas de trabajo. Haz <strong><a href="{% url 'datos-personales' %}">click aquí</a></strong> para completar tus <strong>DATOS PERSONALES</strong> y de <strong>CONTACTO</strong></p>
+                                    </div>
+                                {% else %}
+                                    {% comment %} Si está autenticado y es postulante {% endcomment %}
+                                    <div class="d-flex justify-content-end mt-3">
+                                        <a href="{% url 'postular' publicacion.url %}"><button type="submit" class="btn btn-primary d-block p-2">POSTULARME <i class="fas fa-briefcase"></i></button></a>
+                                    </div>
+                                {% endif %}
                             {% endif %}
                         {% else %}
                             {% comment %} Si no es postulante {% endcomment %}
@@ -87,7 +106,7 @@
                 {% else %}
                     {% comment %} Si no está autenticado {% endcomment %}
                     <div class="d-flex justify-content-end mt-3">
-                        <a href="/publicacion/postular/<%= publicacion.url %>"><button type="submit" class="btn btn-primary d-block p-2">POSTULARME <i class="fas fa-briefcase"></i></button></a>
+                        <a href="{% url 'postular' publicacion.url %}"><button type="submit" class="btn btn-primary d-block p-2">POSTULARME <i class="fas fa-briefcase"></i></button></a>
                     </div>
                 {% endif %}
             </div>
