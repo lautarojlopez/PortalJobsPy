@@ -7,11 +7,11 @@ class FormDatosPersonales(forms.ModelForm):
 
     class Meta:
         model = CV
-        fields = ('nombre', 'fecha_nacimiento', 'genero', 'DNI', 'nacionalidad', 'localidad', 'direccion', 'codigo_postal', 'telefono', 'email', 'imagen')
+        fields = ('nombre', 'apellido', 'fecha_nacimiento', 'genero', 'DNI', 'nacionalidad', 'localidad', 'direccion', 'codigo_postal', 'telefono', 'email', 'imagen')
     
     def clean_imagen(self):
         imagen = self.cleaned_data['imagen']
-        if imagen:
+        if imagen and type(imagen) == 'django.core.files.uploadedfile.InMemoryUploadedFile':
             if imagen.size > 5000000:
                 raise ValidationError("El tamaño de la imagen es mayor a 5MB.")
             return imagen

@@ -20,7 +20,7 @@
                     {% for postulante in postulantes %}
                         <div class="row">
                             <div class="col-8">
-                                <h4>{{ postulante.cv.nombre }}</h4>
+                                <h4>{{ postulante.cv.nombre }} {{ postulante.cv.apellido }}</h4>
                             </div>
                             <div class="col-4">
                                 <a href="{% url 'cv-postulante' url=publicacion.url id=forloop.counter0 %}"><button type="button" class="btn btn-success d-inline">VER CV <i class="fas fa-user"></i></button></a>

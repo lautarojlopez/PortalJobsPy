@@ -26,23 +26,23 @@ def editar_datos_personales(request):
     if not request.userprofile.tipo_cuenta == "Postulante":
         return redirect('403')
 
+    # Busca el cv en la base de datos
+    cv = CV.objects.get(id=request.userprofile.cv_id)
+
     if request.method == "GET":
-        # Busca el cv en la base de datos
-        cv = CV.objects.get(id=request.userprofile.cv_id)
         return render(request, 'datos-personales.html', { "cv": cv })
 
-    elif request.method == "POST":
+    if request.method == "POST":
         
         form_datos_personales = FormDatosPersonales(request.POST, request.FILES)
 
         if form_datos_personales.is_valid():
             datos = form_datos_personales.cleaned_data
             print(datos)
-            # Busca el CV del usuario en la base de datos
-            cv = CV.objects.get(id=request.userprofile.cv_id)
             try:
                 # Reemplaza con los datos del formulario
                 cv.nombre = datos['nombre']
+                cv.apellido = datos['apellido']
                 cv.fecha_nacimiento = datos['fecha_nacimiento']
                 cv.genero = datos['genero']
                 cv.DNI = datos['DNI']
@@ -52,6 +52,7 @@ def editar_datos_personales(request):
                 cv.codigo_postal = datos['codigo_postal']
                 cv.telefono = datos['telefono']
                 cv.email = datos['email']
+
                 if datos['imagen'] is not None:
                     cv.imagen = datos['imagen']
 

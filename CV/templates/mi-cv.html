@@ -40,7 +40,7 @@
                     <div class="col-4">
                         <h3 class="mb-3">Datos Personales</h3>
                         <h4>Nombre</h4>
-                        <p>{% if cv.nombre is not None %} {{ cv.nombre }} {% else %} "N/A" {% endif %}</p>
+                        <p>{% if cv.nombre is not None %} {{ cv.nombre }} {{ cv.apellido }} {% else %} "N/A" {% endif %}</p>
                         <h4>Fecha de nacimiento</h4>
                         <p id="fechanacimiento">{% if cv.fecha_nacimiento is not None %} {{ cv.fecha_nacimiento }} {% else %} N/A {% endif %}</p>
                         <h4>Género</h4>

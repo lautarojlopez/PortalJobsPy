@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.http import JsonResponse
-from .froms import FormPublicacion
+from .forms import FormPublicacion
 from .models import Publicacion
 from django.utils.text import slugify
 import shortuuid

@@ -27,6 +27,7 @@ def arreglo_vacio():
 class CV(models.Model):
 
     nombre = models.CharField(max_length=50, null=True)
+    apellido = models.CharField(max_length=50, null=True)
     DNI = models.BigIntegerField(null=True)
     fecha_nacimiento = models.CharField(max_length=15, null=True)
     genero = models.CharField(max_length=15, null=True)
