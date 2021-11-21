@@ -157,5 +157,16 @@ MESSAGE_TAGS = {message_constants.DEBUG: 'debug',
                 message_constants.WARNING: 'warning',
                 message_constants.ERROR: 'danger',}
 
+# SUBIR IMAGENES
 MEDIA_URL = '/images/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+
+# ENVIO DE EMAILS
+EMAIL_HOST = 'smtp.googlemail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'teamportaljobs@gmail.com'
+EMAIL_HOST_PASSWORD = '9jl4g345rh9'
+EMAIL_USE_TLS = True
+
+# TOKENS
+PASSWORD_RESET_TIMEOUT_DAYS = 1

@@ -6,7 +6,7 @@ class TipoCuenta:
         self.get_response = get_response
     
     def __call__(self, request):
-        if request.user.is_authenticated:
+        if request.user.is_authenticated and not request.user.is_superuser:
             tipo_cuenta = UserProfile.objects.get(datos_id=request.user.id).tipo_cuenta
             request.tipo_cuenta = tipo_cuenta
         else:
@@ -20,7 +20,7 @@ class GetUserProfile:
         self.get_response = get_response
     
     def __call__(self, request):
-        if request.user.is_authenticated:
+        if request.user.is_authenticated and not request.user.is_superuser:
             userprofile = UserProfile.objects.get(datos_id=request.user.id)
             request.userprofile = userprofile
         else:
