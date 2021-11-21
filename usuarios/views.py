@@ -71,39 +71,3 @@ def mis_postulaciones(request):
     usuario = UserProfile.objects.get(id=request.userprofile.datos.id)
     postulaciones = usuario.postulaciones.all()
     return render(request, 'mis-postulaciones.html', {"postulaciones": postulaciones})
-
-# # Restablecer contraseña
-# def form_reset_password(request):
-#     if request.method == "GET":
-#         return render(request, 'reset-password.html')
-#     if request.method == "POST":
-#         if request.POST['username']:
-#             usuario = User.objects.get(username=request.POST['username'])
-#             print(usuario)
-#             type(print(usuario.email))
-#             if usuario:
-#                 # Crea el token para confirmar la creación de la cuenta
-#                 token_generator = PasswordResetTokenGenerator()
-#                 token = token_generator.make_token(usuario)
-
-#                 # Enviar email de confirmacion
-#                 mail_confirmar_cuenta(usuario.email,
-#                                     'email-reset-password.html',
-#                                     'Restablecer Contraseña',
-#                                     'Restablecer',
-#                                     context={
-#                                             "usuario": request.POST['username'],
-#                                             "request": request,
-#                                             "token": token,
-#                                             "id": usuario.id
-#                                         }
-#                                     )
-#             messages.success(request, "Mensaje enviado. Revisa tu casilla de correo electrónico.")
-#             return redirect('login')
-#         else:
-#             messages.error(request, "Escribe un nombre de usuario.")
-#             return redirect('reset-password')
-
-# def reset_password(request):
-#     if request.method == "GET":
-#         return JsonResponse(request.GET)
